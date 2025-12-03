@@ -1,0 +1,13 @@
+{
+  "featureFlags": {
+    "compact_query_text": {
+      "kind": "enabled"
+    },
+    "no_inline": {
+      "kind": "enabled"
+    }
+  },
+  "language": "typescript",
+  "schema": "./src/graphql/schema/github.schema.graphql",
+  "src": "./src"
+}

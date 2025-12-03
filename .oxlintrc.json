@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": ["**/__generated__/**", "**/node_modules/**"],
+  "plugins": ["react", "unicorn", "typescript", "oxc"],
+  "rules": {
+    "eslint/sort-keys": "error"
+  }
+}

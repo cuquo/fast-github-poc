@@ -1,0 +1,40 @@
+@utility collapse-folder-state {
+  &:checked + .prItem .collapse-button svg {
+    @apply -rotate-90;
+  }
+
+  &:checked + .prItem + ul {
+    @apply hidden;
+  }
+
+  &:not(:checked) + .prItem + ul {
+    @apply block;
+  }
+
+  &:checked + .prItem .pr-file .dir-open {
+    @apply inline-block;
+  }
+  &:checked + .prItem .pr-file .dir-close {
+    @apply hidden;
+  }
+  &:not(:checked) + .prItem .pr-file .dir-open {
+    @apply hidden;
+  }
+  &:not(:checked) + .prItem .pr-file .dir-close {
+    @apply inline-block;
+  }
+}
+
+@utility sidebar-container {
+  &:hover .prSep {
+    @apply border-[#3d444db3];
+  }
+}
+
+@utility sidebar-virtualized {
+  &[data-virtualized="true"] .prItem {
+    contain: strict;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 32px;
+  }
+}
