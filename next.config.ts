@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
   cacheLife: {
     poc: {
       expire: 86400, // 1 day
-      revalidate: 3600, // 1 hour
-      stale: 3600, // 1 hour
+      revalidate: 86400, // 1 hour
+      stale: 86400, // 1 hour
     },
   },
   experimental: {
