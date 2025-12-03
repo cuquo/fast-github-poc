@@ -1,0 +1,226 @@
+.pl-c {
+  color: var(--color-prettylights-syntax-comment);
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: var(--color-prettylights-syntax-constant);
+}
+
+.pl-e,
+.pl-en {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.pl-smi,
+.pl-s .pl-s1 {
+  color: var(--color-prettylights-syntax-storage-modifier-import);
+}
+
+.pl-ent {
+  color: var(--color-prettylights-syntax-entity-tag);
+}
+
+.pl-k {
+  color: var(--color-prettylights-syntax-keyword);
+}
+
+.pl-s,
+.pl-pds,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sre,
+.pl-sr .pl-sra {
+  color: var(--color-prettylights-syntax-string);
+}
+
+.pl-v,
+.pl-smw {
+  color: var(--color-prettylights-syntax-variable);
+}
+
+.pl-bu {
+  color: var(--color-prettylights-syntax-brackethighlighter-unmatched);
+}
+
+.pl-ii {
+  color: var(--color-prettylights-syntax-invalid-illegal-text);
+  background-color: var(--color-prettylights-syntax-invalid-illegal-bg);
+}
+
+.pl-c2 {
+  color: var(--color-prettylights-syntax-carriage-return-text);
+  background-color: var(--color-prettylights-syntax-carriage-return-bg);
+}
+
+.pl-c2::before {
+  content: "^M";
+}
+
+.pl-sr .pl-cce {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-string-regexp);
+}
+
+.pl-ml {
+  color: var(--color-prettylights-syntax-markup-list);
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-markup-heading);
+}
+
+.pl-mi {
+  font-style: italic;
+  color: var(--color-prettylights-syntax-markup-italic);
+}
+
+.pl-mb {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-markup-bold);
+}
+
+.pl-md {
+  color: var(--color-prettylights-syntax-markup-deleted-text);
+  background-color: var(--color-prettylights-syntax-markup-deleted-bg);
+}
+
+.pl-mi1 {
+  color: var(--color-prettylights-syntax-markup-inserted-text);
+  background-color: var(--color-prettylights-syntax-markup-inserted-bg);
+}
+
+.pl-mc {
+  color: var(--color-prettylights-syntax-markup-changed-text);
+  background-color: var(--color-prettylights-syntax-markup-changed-bg);
+}
+
+.pl-mi2 {
+  color: var(--color-prettylights-syntax-markup-ignored-text);
+  background-color: var(--color-prettylights-syntax-markup-ignored-bg);
+}
+
+.pl-mdr {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-meta-diff-range);
+}
+
+.pl-ba {
+  color: var(--color-prettylights-syntax-brackethighlighter-angle);
+}
+
+.pl-sg {
+  color: var(--color-prettylights-syntax-sublimelinter-gutter-mark);
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: var(--color-prettylights-syntax-constant-other-reference-link);
+}
+
+.diff-code pre {
+  text-wrap: auto;
+}
+
+.f-sidebar:not(:hover, :has(:focus-visible)) a:target-current {
+  background-color: #151A20;
+  scroll-snap-align: center;
+}
+
+.f-sidebar:not(:hover, :has(:focus-visible)) {
+  scroll-snap-type: y mandatory;
+  scroll-target-group: auto;
+}
+
+.f-sidebar:not(:hover, :has(:focus-visible))::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  opacity: 0 !important;
+  width: 0px !important;
+  height: 0px !important;
+}
+
+.shiki {
+  background-color: transparent !important;
+}
+
+.line span {
+  word-wrap: anywhere;
+}
+
+@keyframes detect-scroll {
+	from,
+	to {
+		--can-scroll: ;
+	}
+}
+
+.sidebar {
+	animation: detect-scroll;
+	animation-timeline: --scroll-timeline;
+	animation-fill-mode: none;
+}
+
+.sidebar::before,
+.sidebar::after {
+	--visibility-if-can-scroll: var(--can-scroll) visible;
+	--visibility-if-cant-scroll: hidden;
+	visibility: var(--visibility-if-can-scroll, var(--visibility-if-cant-scroll));
+}
+
+.topShadow::before,
+.bottomShadow::before {
+	content: '';
+  contain: paint;
+	display: block;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	height: 64px;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0;
+  animation: reveal linear both;
+  animation-timeline: --scroll-timeline;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+
+.topShadow::before {
+  animation-range: 0px 24px;
+  background: linear-gradient(to bottom, rgb(13, 17, 23), rgba(13, 17, 23, 0));
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+@keyframes reveal {
+  to { opacity: 1; }
+}
+
+.sidebar {
+	scroll-timeline: --scroll-timeline y;
+}
+
+.bottomShadow::before {
+	animation-direction: reverse;
+	animation-range: calc(100% - 24px) 100%;
+	background: linear-gradient(to top, rgb(13, 17, 23), rgba(13, 17, 23, 0));
+  bottom: 0;
+}
+
+.wd-del {
+  background-color: #7A302E;
+  border-radius: 0.125rem;
+}
+
+.wd-add {
+  background-color: #256132;
+  border-radius: 0.125rem;
+}

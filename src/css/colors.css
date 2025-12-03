@@ -1,0 +1,33 @@
+/* use https://chir.ag/projects/name-that-color to convert hex to name */
+
+@theme {
+  --color-*: initial;
+  --color-anakiwa: #a5d6ff;
+  --color-black-pearl: #010409;
+  --color-bright-gray: oklch(0.3837 0.0179 254.74);
+  --color-brown-bramble: #5a1e02;
+  --color-bunker: #0d1117;
+  --color-cream-can: #f2cc60;
+  --color-dark-burgundy: #67060c;
+  --color-denim: #1158c7;
+  --color-diesel: #010000;
+  --color-dodger-blue: #4493f8;
+  --color-english-holly: #033a16;
+  --color-hot-tuddy: oklch(0.6438 0.1333 75.9);
+  --color-madang: #aff5b4;
+  --color-malibu: #79c0ff;
+  --color-manatee: #9198a1;
+  --color-mauve: #d2a8ff;
+  --color-mirage: #151b23;
+  --color-nevada: #1f232a;
+  --color-pastel-green: #7ee787;
+  --color-peach-schnapps: #ffdcd7;
+  --color-polar: #f0f6fc;
+  --color-royal-blue: #1f6feb;
+  --color-salmon: #ff7b72;
+  --color-sunset-orange: oklch(0.6651 0.2046 26.96);
+  --color-tall-poppy: #b62324;
+  --color-tamarillo: #8e1519;
+  --color-texas-rose: #ffa657;
+  --color-chelsea-gem: #9e6a03;
+}

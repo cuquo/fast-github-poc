@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@import "./root.css";
+@import "./breakpoints.css";
+@import "./colors.css";
+@import "./utilities.css";
+
+@theme {
+  --color-header-bg: var(--color-black-pearl);
+  --color-bg-default: var(--color-bunker);
+  --color-fg-default: var(--color-polar);
+  --color-fg-danger: var(--color-sunset-orange);
+  --color-border-default: var(--color-bright-gray);
+  --color-fg-muted: var(--color-manatee);
+  --color-border-muted: --alpha(var(--color-bright-gray) / 70%);
+  --color-bg-muted: var(--color-mirage);
+  --color-bg-neutral-muted: var(--color-nevada);
+  --color-border-accent-emphasis: var(--color-royal-blue);
+  --color-fg-accent: var(--color-dodger-blue);
+  --color-bg-attention-muted: --alpha(var(--color-hot-tuddy) / 15%);
+  --color-outline-focus: var(--color-royal-blue);
+  --color-border-neutral-muted: --alpha(var(--color-bright-gray) / 70%);
+  --color-bg-attention-emphasis: var(--color-chelsea-gem);
+
+  --color-prettylights-syntax-brackethighlighter-angle: var(--color-manatee);
+  --color-prettylights-syntax-brackethighlighter-unmatched: var(
+    --color-sunset-orange
+  );
+  --color-prettylights-syntax-carriage-return-bg: var(--color-tall-poppy);
+  --color-prettylights-syntax-carriage-return-text: var(--color-polar);
+  --color-prettylights-syntax-comment: var(--color-manatee);
+  --color-prettylights-syntax-constant: var(--color-malibu);
+  --color-prettylights-syntax-constant-other-reference-link: var(
+    --color-anakiwa
+  );
+  --color-prettylights-syntax-entity: var(--color-mauve);
+  --color-prettylights-syntax-entity-tag: var(--color-pastel-green);
+  --color-prettylights-syntax-invalid-illegal-bg: var(--color-tamarillo);
+  --color-prettylights-syntax-invalid-illegal-text: var(--color-polar);
+  --color-prettylights-syntax-keyword: var(--color-salmon);
+  --color-prettylights-syntax-markup-bold: var(--color-polar);
+  --color-prettylights-syntax-markup-changed-bg: var(--color-brown-bramble);
+  --color-prettylights-syntax-markup-changed-text: var(--color-diesel);
+  --color-prettylights-syntax-markup-deleted-bg: var(--color-dark-burgundy);
+  --color-prettylights-syntax-markup-deleted-text: var(--color-peach-schnapps);
+  --color-prettylights-syntax-markup-heading: var(--color-royal-blue);
+  --color-prettylights-syntax-markup-ignored-bg: var(--color-denim);
+  --color-prettylights-syntax-markup-ignored-text: var(--color-polar);
+  --color-prettylights-syntax-markup-inserted-bg: var(--color-english-holly);
+  --color-prettylights-syntax-markup-inserted-text: var(--color-madang);
+  --color-prettylights-syntax-markup-italic: var(--color-polar);
+  --color-prettylights-syntax-markup-list: var(--color-cream-can);
+  --color-prettylights-syntax-meta-diff-range: var(--color-mauve);
+  --color-prettylights-syntax-storage-modifier-import: var(--color-polar);
+  --color-prettylights-syntax-string: var(--color-anakiwa);
+  --color-prettylights-syntax-string-regexp: var(--color-pastel-green);
+  --color-prettylights-syntax-sublimelinter-gutter-mark: var(
+    --color-bright-gray
+  );
+  --color-prettylights-syntax-variable: var(--color-texas-rose);
+
+  --borderWidth-thin: 0.0625rem;
+}
+
+@layer base {
+  :root {
+    --h00-size-mobile: 2.5rem;
+    --h0-size-mobile: 2rem;
+    --h1-size-mobile: 1.625rem;
+    --h2-size-mobile: 1.375rem;
+    --h3-size-mobile: 1.125rem;
+    --h00-size: 3rem;
+    --h0-size: 2.5rem;
+    --h1-size: 2rem;
+    --h2-size: 1.5rem;
+    --h3-size: 1.25rem;
+    --h4-size: 1rem;
+    --h5-size: 0.875rem;
+    --h6-size: 0.75rem;
+    --body-font-size: 0.875rem;
+    --font-size-small: 0.75rem;
+    --borderRadius-full: 624.9375rem; /** Use this border radius for pill shaped elements */
+    --borderRadius-large: 0.75rem;
+    --borderRadius-medium: 0.375rem;
+    --borderRadius-small: 0.1875rem;
+    --borderWidth-thick: 0.125rem;
+    --borderWidth-thicker: 0.25rem;
+    --borderWidth-thin: 0.0625rem;
+    --outline-focus-offset: -0.125rem;
+    --outline-focus-width: 0.125rem;
+    --borderRadius-default: var(--borderRadius-medium);
+    --borderWidth-default: var(--borderWidth-thin);
+    --boxShadow-thick: inset 0 0 0 var(--borderWidth-thick);
+    --boxShadow-thicker: inset 0 0 0 var(--borderWidth-thicker);
+    --boxShadow-thin: inset 0 0 0 var(--borderWidth-thin);
+    --Layout-sidebar-width: 240px;
+    --Layout-gutter: 24px;
+    --fontStack-sansSerif:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
+      Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --fontStack-monospace:
+      ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
+      monospace;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    :root {
+      --Layout-sidebar-width: 296px;
+      --Layout-gutter: 24px;
+    }
+  }
+}
+
+@utility container-lg {
+  max-width: 1012px;
+  margin-right: auto;
+  margin-left: auto;
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /i-love-dogs
+Allow: /i-love-dogs/
+Disallow: /*?
+Disallow: /*
