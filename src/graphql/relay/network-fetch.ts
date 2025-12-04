@@ -21,7 +21,7 @@ export async function networkFetch(
   request: RequestParameters,
   variables: Variables,
 ): Promise<GraphQLResponseWithoutData | GraphQLResponse | null> {
-  'use cache';
+  'use cache: remote';
   cacheLife('poc');
 
   // Abort when this cached render is no longer needed
