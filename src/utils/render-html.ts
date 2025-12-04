@@ -12,7 +12,7 @@ import { cacheSignal } from 'react';
  * - Silently ignores AbortErrors caused by cache invalidation.
  */
 export async function renderHTML(text: string, context: string) {
-  'use cache';
+  'use cache: remote';
   cacheLife('poc');
 
   // Abort when React no longer needs this cached render

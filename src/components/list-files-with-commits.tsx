@@ -31,7 +31,7 @@ async function fetchLastCommit(
   token: string,
   branch = 'HEAD',
 ): Promise<LastCommit | null> {
-  'use cache';
+  'use cache: remote';
   cacheLife('poc');
 
   const url = new URL(`${API}/repos/${owner}/${repo}/commits`);
