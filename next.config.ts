@@ -1,4 +1,12 @@
 import type { NextConfig } from 'next';
+import withRspack from 'next-rspack';
+
+const withRS = (nextConfig: NextConfig) => {
+  if (process.env.RSPACK === '1') {
+    return withRspack(nextConfig);
+  }
+  return nextConfig;
+};
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -6,22 +14,26 @@ const nextConfig: NextConfig = {
   cacheLife: {
     poc: {
       expire: 86400, // 1 day
-      revalidate: 86400, // 1 hour
-      stale: 86400, // 1 hour
+      revalidate: 86400, // 1 day
+      stale: 86400, // 1 day
     },
   },
   experimental: {
     inlineCss: true,
-    staleTimes: {
-      dynamic: 60,
+    // staleTimes: {
+    //   dynamic: 60,
+    // },
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+      hmrRefreshes: true,
     },
   },
-  // logging: {
-  //   fetches: {
-  //     fullUrl: false,
-  //   },
-  // },
   reactCompiler: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
-export default nextConfig;
+export default withRS(nextConfig);

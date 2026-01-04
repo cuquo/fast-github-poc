@@ -645,3 +645,13 @@ summary > .markdown-heading {
   background-color: var(--color-bg-neutral-muted);
   border-radius: 6px;
 }
+
+.i-love-dogs table {
+  max-width: calc(100vw - 80px);
+}
+
+@media (min-width: 34rem) {
+  .i-love-dogs table {
+    max-width: auto;
+  }
+}

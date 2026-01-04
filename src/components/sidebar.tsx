@@ -1,8 +1,8 @@
 import 'server-only';
 
-import Link from 'next/link';
 import { use } from 'react';
 
+import { SIZE_TO_PREFETCH } from '@/constants/options';
 import TreeFragment, {
   type TreeFragment$key,
 } from '@/graphql/fragments/__generated__/TreeFragment.graphql';
@@ -10,6 +10,7 @@ import TreeQueryNode, {
   type TreeQuery,
   type TreeQuery$data,
 } from '@/graphql/queries/__generated__/TreeQuery.graphql';
+import getServerFragment from '@/graphql/relay/get-server-fragment';
 import {
   getQueryFromRelayStore,
   loadSerializableQuery,
@@ -18,8 +19,7 @@ import DirectoryIcon from '@/icons/directory-icon';
 import FileIcon from '@/icons/file-icon';
 import SymlinkIcon from '@/icons/symlink-icon';
 
-import { SIZE_TO_PREFETCH } from '../constants/options';
-import getServerFragment from '../graphql/relay/get-server-fragment';
+import Link from './link';
 
 export default function Sidebar({
   params,

@@ -1,9 +1,10 @@
 /** biome-ignore-all lint/performance/noImgElement: caching */
 
 import { cacheLife } from 'next/cache';
-import Link from 'next/link';
 
-import Markdown from '../components/markdown';
+import Link from '@/components/link';
+import Markdown from '@/components/markdown';
+
 import { gist, title } from './_gist';
 
 export default async function RootPage() {
@@ -15,7 +16,7 @@ export default async function RootPage() {
       <Markdown className="mt-10 max-w-3xl px-10" context="gist" text={title} />
       <div className="mt-8 mb-8 flex w-full max-w-3xl flex-col px-10 md:flex-row">
         <Link
-          className="border-(length:--borderWidth-thin) mb-2 flex h-10 items-center rounded-(--borderRadius-medium) border-[#ffffff26] bg-[#388bfd1a]! px-2 text-fg-default! hover:text-fg-default! md:mr-2 md:mb-0 md:h-12 md:w-1/3 md:px-4"
+          className="border-(length:--borderWidth-thin) mb-2 flex h-10 items-center rounded-(--borderRadius-medium) border-[#ffffff26] bg-[#131D2E]! px-2 text-fg-default! hover:text-fg-default! md:mr-2 md:mb-0 md:h-12 md:w-1/3 md:px-4"
           href="/facebook/react"
           prefetch
         >
@@ -29,7 +30,7 @@ export default async function RootPage() {
           <span className="font-medium">React repo</span>
         </Link>
         <Link
-          className="border-(length:--borderWidth-thin) mb-2 flex h-10 items-center rounded-(--borderRadius-medium) border-[#ffffff26] bg-[#388bfd1a]! px-2 text-fg-default! hover:text-fg-default! md:mb-0 md:h-12 md:w-1/3 md:px-4"
+          className="border-(length:--borderWidth-thin) mb-2 flex h-10 items-center rounded-(--borderRadius-medium) border-[#ffffff26] bg-[#131D2E]! px-2 text-fg-default! hover:text-fg-default! md:mb-0 md:h-12 md:w-1/3 md:px-4"
           href="/vercel/next.js"
           prefetch
         >
@@ -43,7 +44,7 @@ export default async function RootPage() {
           <span className="font-medium">NextJS repo</span>
         </Link>
         <Link
-          className="border-(length:--borderWidth-thin) flex h-10 items-center rounded-(--borderRadius-medium) border-[#ffffff26] bg-[#388bfd1a]! px-2 text-fg-default! hover:text-fg-default! md:ml-2 md:h-12 md:w-1/3 md:px-4"
+          className="border-(length:--borderWidth-thin) flex h-10 items-center rounded-(--borderRadius-medium) border-[#ffffff26] bg-[#131D2E]! px-2 text-fg-default! hover:text-fg-default! md:ml-2 md:h-12 md:w-1/3 md:px-4"
           href="/oven-sh/bun"
           prefetch
         >

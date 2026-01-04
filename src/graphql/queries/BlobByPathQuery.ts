@@ -9,6 +9,11 @@ export const BlobByPathQuery = graphql`
     $path: String
   ) {
     repository(owner: $owner, name: $name) {
+      description
+      openGraphImageUrl
+      owner {
+        avatarUrl
+      }
       object(expression: $expr) {
         ... on Blob {
           text

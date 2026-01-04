@@ -16,7 +16,9 @@ export default function Markdown({
 }) {
   if (!text) return null;
 
-  const markdownHtml = use(renderHTML(text, context));
+  const markdownHtml = use(renderHTML(text, context, 'markdown', true));
+
+  if (!markdownHtml) return <span>Unable to render markdown.</span>;
 
   return (
     <>

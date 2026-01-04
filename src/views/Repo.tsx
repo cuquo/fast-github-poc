@@ -2,30 +2,29 @@
 import 'server-only';
 
 import { clsx } from 'clsx/lite';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense, use } from 'react';
 
+import Link from '@/components/link';
 import ListFiles from '@/components/list-files';
 import Readme from '@/components/read-me';
 import TextSkeleton from '@/components/text-skeleton';
+import { ALLOWED_REPOS } from '@/constants/options';
 import TreeFragment, {
   type TreeFragment$key,
 } from '@/graphql/fragments/__generated__/TreeFragment.graphql';
 import RepoQueryNode, {
-  type RepoQuery,
   type RepoQuery$data,
 } from '@/graphql/queries/__generated__/RepoQuery.graphql';
+import { repoQueryCache } from '@/graphql/queries/RepoQueryCache';
 import getServerFragment from '@/graphql/relay/get-server-fragment';
-import {
-  getQueryFromRelayStore,
-  loadSerializableQuery,
-} from '@/graphql/relay/load-serializable-query';
+import { getQueryFromRelayStore } from '@/graphql/relay/load-serializable-query';
 import BranchIcon from '@/icons/branch-icon';
 import CodeIcon from '@/icons/code-icon';
 import LinkIcon from '@/icons/link-icon';
 import TagIcon from '@/icons/tag-icon';
 import TriangleDownIcon from '@/icons/triangle-down-icon';
+import { numberFormatter } from '@/utils/number-formatter';
 
 export default function Repo({
   params,
@@ -34,14 +33,9 @@ export default function Repo({
 }) {
   const { name, owner } = use(params);
 
-  if (!['vercel', 'facebook', 'oven-sh'].includes(owner)) notFound();
+  if (!ALLOWED_REPOS.includes(owner)) notFound();
 
-  use(
-    loadSerializableQuery<typeof RepoQueryNode, RepoQuery>(RepoQueryNode, {
-      name,
-      owner,
-    }),
-  );
+  use(repoQueryCache(owner, name));
 
   const { repository } = getQueryFromRelayStore<RepoQuery$data>(RepoQueryNode, {
     name,
@@ -120,7 +114,7 @@ export default function Repo({
     commitUrl,
     totalCommits:
       totalCommits && !Number.isNaN(Number(totalCommits))
-        ? new Intl.NumberFormat('en-US').format(Number(totalCommits))
+        ? numberFormatter.format(Number(totalCommits))
         : null,
   };
 
@@ -168,7 +162,7 @@ export default function Repo({
                 <TriangleDownIcon className="ml-2 inline-block fill-fg-muted align-text-bottom" />
               </div>
               {branchesCount > 0 && (
-                <div className="ml-2 hidden h-8 select-none items-center rounded-(--borderRadius-medium) px-3 hover:bg-[#656c7633] sm:flex lg:px-1">
+                <div className="ml-2 hidden h-8 select-none items-center rounded-(--borderRadius-medium) px-3 hover:bg-[#2D3239] sm:flex lg:px-1">
                   <BranchIcon className="inline-block fill-fg-muted align-text-bottom" />
                   <span className="ml-2 hidden items-center font-semibold text-fg-default text-sm lg:flex">
                     {branchesCount}
@@ -179,7 +173,7 @@ export default function Repo({
                 </div>
               )}
               {tagsCount > 0 && (
-                <div className="ml-1 hidden h-8 select-none items-center rounded-(--borderRadius-medium) px-3 hover:bg-[#656c7633] sm:flex lg:px-1">
+                <div className="ml-1 hidden h-8 select-none items-center rounded-(--borderRadius-medium) px-3 hover:bg-[#2D3239] sm:flex lg:px-1">
                   <TagIcon className="inline-block fill-fg-muted align-text-bottom" />
                   <span className="ml-2 hidden items-center font-semibold text-fg-default text-sm lg:flex">
                     {tagsCount}
@@ -210,7 +204,7 @@ export default function Repo({
                 repo={name}
               />
             </div>
-            <div className="-ml-4 -mr-4 border-(length:--borderWidth-thin) mb-4 rounded-(--borderRadius-medium) border-border-default px-4 [ccontent-visibility:auto] [contain-intrinsic-size:auto_800px] sm:mx-0">
+            <div className="border-(length:--borderWidth-thin) -mr-4 mb-4 -ml-4 rounded-(--borderRadius-medium) border-border-default px-4 [ccontent-visibility:auto] [contain-intrinsic-size:auto_800px] sm:mx-0">
               <Suspense fallback={<TextSkeleton className="mb-16 px-4" />}>
                 <Readme files={files} name={name} owner={owner} />
               </Suspense>
@@ -241,7 +235,7 @@ export default function Repo({
                 <div className="mt-4 hidden flex-wrap gap-1 md:flex">
                   {repositoryTopics.map((topic) => (
                     <span
-                      className="hover:no-underline! h-[22px] select-none content-center rounded-full bg-[#388bfd1a]! px-2.5 font-medium text-fg-accent text-xs! hover:bg-[#1f6feb]! hover:text-fg-default!"
+                      className="hover:no-underline! h-5.5 select-none content-center rounded-full bg-[#131D2E]! px-2.5 font-medium text-fg-accent text-xs! hover:bg-[#1f6feb]! hover:text-fg-default!"
                       key={topic}
                       // href={`https://github.com/topics/${topic}`}
                     >

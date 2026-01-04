@@ -7,7 +7,7 @@ import {
   getSelector,
 } from 'relay-runtime';
 
-import { serverEnvironment } from './environment';
+import { getServerEnvironment } from './environment';
 
 // A custom hook to read the data of a fragment from the store.
 // This is a simplified version of the useFragment hook from react-relay.
@@ -25,7 +25,7 @@ export default function getServerFragment<TKey extends KeyType>(
   fragmentInput: GraphQLTaggedNode,
   fragmentRef: TKey | null | undefined,
 ): KeyTypeData<TKey> {
-  const environment = serverEnvironment();
+  const environment = getServerEnvironment();
 
   if (fragmentRef == null) {
     return null;

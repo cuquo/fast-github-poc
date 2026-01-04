@@ -1,8 +1,9 @@
 import 'server-only';
 
 import { clsx } from 'clsx/lite';
-import Link from 'next/link';
 import { Fragment } from 'react';
+
+import Link from './link';
 
 export default function BlobSkeleton({
   branch,

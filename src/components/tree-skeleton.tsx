@@ -1,10 +1,11 @@
 /** biome-ignore-all lint/performance/noImgElement: use cached assets */
 import 'server-only';
 
-import Link from 'next/link';
 import { Fragment } from 'react';
 
 import DirectoryIcon from '@/icons/directory-icon';
+
+import Link from './link';
 
 export default function TreeSkeleton({
   branch,
@@ -80,7 +81,7 @@ export default function TreeSkeleton({
                   <th className="hidden w-[calc(100%-136px)] pl-4 text-left font-semibold text-fg-muted text-xs md:table-cell md:w-[40%]">
                     Last commit message
                   </th>
-                  <th className="w-[136px] pr-4 text-right font-semibold text-fg-muted text-xs">
+                  <th className="w-34 pr-4 text-right font-semibold text-fg-muted text-xs">
                     Last commit date
                   </th>
                 </tr>

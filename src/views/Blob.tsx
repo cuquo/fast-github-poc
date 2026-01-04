@@ -1,21 +1,18 @@
 /** biome-ignore-all lint/performance/noImgElement: use already optimized image from github */
 import 'server-only';
 
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Fragment, Suspense, use } from 'react';
 
 import BlobHighlight from '@/components/blob-highlight';
 import ButtonTop from '@/components/button';
+import Link from '@/components/link';
 import Markdown from '@/components/markdown';
 import BlobByPathQueryNode, {
-  type BlobByPathQuery,
   type BlobByPathQuery$data,
 } from '@/graphql/queries/__generated__/BlobByPathQuery.graphql';
-import {
-  getQueryFromRelayStore,
-  loadSerializableQuery,
-} from '@/graphql/relay/load-serializable-query';
+import { blobByPathQueryCache } from '@/graphql/queries/BlobByPathQueryCache';
+import { getQueryFromRelayStore } from '@/graphql/relay/load-serializable-query';
 import { formatBytes } from '@/utils/format-bytes';
 import { countLinesAndLoc } from '@/utils/number-of-lines';
 
@@ -34,18 +31,7 @@ export default function Blob({
 }) {
   const path = decodeURIComponent(data.slice(0).join('/'));
 
-  use(
-    loadSerializableQuery<typeof BlobByPathQueryNode, BlobByPathQuery>(
-      BlobByPathQueryNode,
-      {
-        expr: `${branch}:${path}`,
-        name,
-        owner,
-        path,
-        withMeta: true,
-      },
-    ),
-  );
+  use(blobByPathQueryCache(owner, name, `${branch}:${path}`, path));
 
   const { repository } = getQueryFromRelayStore<BlobByPathQuery$data>(
     BlobByPathQueryNode,
@@ -168,7 +154,7 @@ export default function Blob({
                         /^(https?:\/\/)?(www\.)?github\.com\//,
                         '/',
                       )}
-                      prefetch
+                      prefetch={false}
                     >
                       #{lastPr?.number}
                     </Link>
@@ -189,7 +175,7 @@ export default function Blob({
               <div className="flex h-11.5 w-full rounded-t-(--borderRadius-medium) border border-border-default bg-bg-muted"></div>
             </div>
           </div>
-          <div className="sticky top-[45px] z-10 mt-4 flex h-[46px] w-full items-center border border-border-default border-t-0 bg-bg-muted pt-px">
+          <div className="sticky top-11.25 z-10 mt-4 flex h-11.5 w-full items-center border border-border-default border-t-0 bg-bg-muted pt-px">
             <span className="border-(length:--borderWidth-thin) ml-2 flex h-7 items-center rounded-(--borderRadius-medium) border-[#3d444d] bg-[#010409] px-3 font-semibold">
               {isMarkdown ? 'Preview' : 'Code'}
             </span>
@@ -198,12 +184,12 @@ export default function Blob({
                 {fileInfo}
               </span>
             )}
-            <div className="-top-2.5 absolute left-0 h-2.5 w-full bg-linear-to-t from-bg-muted to-transparent">
+            <div className="absolute -top-2.5 left-0 h-2.5 w-full bg-linear-to-t from-bg-muted to-transparent">
               <div className="absolute bottom-0 h-px w-full bg-border-default"></div>
             </div>
           </div>
-          <div className="-mt-[45px] sticky top-0 z-9 flex w-full">
-            <div className="flex h-[45px] w-full items-center justify-between border border-border-default border-t-0 bg-bg-muted pr-2 pl-4">
+          <div className="sticky top-0 z-9 -mt-11.25 flex w-full">
+            <div className="flex h-11.25 w-full items-center justify-between border border-border-default border-t-0 bg-bg-muted pr-2 pl-4">
               <div className="flex items-center">
                 <Link
                   className="font-semibold text-fg-default"

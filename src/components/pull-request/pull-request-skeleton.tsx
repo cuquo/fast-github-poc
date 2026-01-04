@@ -6,6 +6,7 @@ import SidebarCollapseIcon from '@/icons/sidebar-collapse-icon';
 import SidebarExpandIcon from '@/icons/sidebar-expand-icon';
 import TriangleDownIcon from '@/icons/triangle-down-icon';
 
+import DiffEntrySkeleton from './diff-entry-skeleton';
 import PullSidebarSkeleton from './pull-sidebar-skeleton';
 
 export default function PullRequestSkeleton() {
@@ -30,7 +31,7 @@ export default function PullRequestSkeleton() {
         </div>
         <div className="relative z-10 flex w-full flex-col bg-bg-default md:flex-row md:items-center">
           <div className="mb-2 h-7.5 w-24 animate-pulse rounded-full bg-bg-neutral-muted md:mb-0" />
-          <div className="mt-0.5 h-3.5 w-80 animate-pulse rounded-(--borderRadius-small) bg-bg-neutral-muted sm:mt-0 sm:w-140 md:ml-2" />
+          <div className="mt-0.5 h-3.5 w-80 animate-pulse rounded-(--borderRadius-small) bg-bg-neutral-muted sm:mt-0 sm:w-110 md:ml-2" />
           <div className="mt-1.5 mb-2 h-3.5 w-35 animate-pulse rounded-(--borderRadius-small) bg-bg-neutral-muted sm:hidden" />
         </div>
       </div>
@@ -75,8 +76,8 @@ export default function PullRequestSkeleton() {
           </nav>
         </div>
       </div>
-      <div className="-mt-15 top-0 left-15 z-9 hidden h-15 w-0 md:sticky md:block lg:left-0">
-        <div className="relative flex h-[59px] w-[calc(100vw-243px)] bg-bg-default lg:ml-17 lg:w-[calc(100vw-259px)]">
+      <div className="top-0 left-15 z-9 -mt-15 hidden h-15 w-0 md:sticky md:block lg:left-0">
+        <div className="relative flex h-14.75 w-[calc(100vw-243px)] bg-bg-default lg:ml-17 lg:w-[calc(100vw-259px)]">
           <div className="flex h-full w-full items-center">
             <div className="mb-2 h-7.5 w-24 shrink-0 animate-pulse rounded-full bg-bg-neutral-muted md:mb-0" />
             <div className="ml-2 flex w-full min-w-0 flex-col">
@@ -91,21 +92,21 @@ export default function PullRequestSkeleton() {
         </div>
       </div>
       <div className="info-sticky sticky top-0 z-8 flex h-15 w-full">
-        <div className="relative h-[60px] w-full min-w-0 md:contain-strict">
-          <div className="absolute h-[59px] w-full bg-bg-default" />
+        <div className="relative h-15 w-full min-w-0 md:contain-strict">
+          <div className="absolute h-14.75 w-full bg-bg-default" />
           <div className="absolute bottom-0 left-4 h-px w-[calc(100%-32px)] bg-[#3d444d] md:left-6 md:w-[calc(100%-48px)] lg:left-8 lg:w-[calc(100%-64px)]" />
-          <div className="relative flex h-30 w-full items-start px-4 md:px-6 lg:px-8">
-            <div className="-z-1 -mt-px sticky top-0 left-0 block h-15 w-0">
-              <div className="-ml-4 md:-ml-6 lg:-ml-8 h-15 w-screen bg-[#3d444d]" />
+          <div className="relative flex h-15 w-full items-start px-4 md:h-30 md:px-6 lg:px-8">
+            <div className="sticky top-0 left-0 -z-1 -mt-px block h-15 w-0">
+              <div className="-ml-4 h-15 w-screen bg-[#3d444d] md:-ml-6 lg:-ml-8" />
             </div>
             <label
-              className="show-sidebar-button pointer-events-none mt-4 flex size-7 shrink-0 select-none items-center justify-center rounded-(--borderRadius-medium) lg:pointer-events-auto lg:cursor-pointer lg:hover:bg-[#656c7633]!"
+              className="show-sidebar-button pointer-events-none mt-4 flex size-7 shrink-0 select-none items-center justify-center rounded-(--borderRadius-medium) lg:pointer-events-auto lg:cursor-pointer lg:hover:bg-[#2D3239]!"
               htmlFor="show-sidebar"
             >
               <SidebarExpandIcon className="sidebar-expand-icon hidden fill-fg-muted lg:block" />
               <SidebarCollapseIcon className="sidebar-collapse-icon fill-fg-muted lg:hidden" />
             </label>
-            <div className="border-(length:--borderWidth-thin) sticky mt-4 ml-2 flex h-7 shrink-0 transform-gpu items-center rounded-(--borderRadius-medium) border-[#3d444d] bg-[#212830] px-2 md:top-[65px]">
+            <div className="border-(length:--borderWidth-thin) sticky mt-4 ml-2 flex h-7 shrink-0 transform-gpu items-center rounded-(--borderRadius-medium) border-[#3d444d] bg-[#212830] px-2 md:top-16.25">
               <span className="select-none font-medium text-xs">
                 All commits
               </span>
@@ -124,8 +125,8 @@ export default function PullRequestSkeleton() {
       </div>
       <div className="mainNav flex w-full px-4 md:px-6 lg:px-8">
         <PullSidebarSkeleton />
-        <div className="prc flex w-full pt-4 lg:pl-4">
-          <div className="h-[1000px]">PR Diff (WIP)</div>
+        <div className="prc flex w-full min-w-0 pt-4 lg:pl-4">
+          <DiffEntrySkeleton />
         </div>
       </div>
     </>

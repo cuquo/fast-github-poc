@@ -1,12 +1,12 @@
 import 'server-only';
 
-import Link from 'next/link';
 import { Suspense } from 'react';
 
 import AltIcon from '@/icons/alt-icon';
 import SeparatorIcon from '@/icons/separator-icon';
 
 import HeaderSegment from './header-segment';
+import Link from './link';
 
 export default function Header() {
   return (

@@ -1,6 +1,5 @@
 import 'server-only';
 
-import { graphql } from '@octokit/graphql';
 import { cacheLife } from 'next/cache';
 import { cacheSignal } from 'react';
 import type {
@@ -11,39 +10,70 @@ import type {
   Variables,
 } from 'relay-runtime';
 
+import { github } from '@/utils/github-octokit';
+
+type RequestWithCacheID = RequestParameters & {
+  cacheID?: string;
+};
+
 /**
- * NetworkFetch
- *
- * @param request - request parameters
- * @param variables - variables to pass to the query
+ * In-flight dedupe (same worker only).
  */
-export async function networkFetch(
+const pending = new Map<
+  string,
+  Promise<GraphQLResponseWithoutData | GraphQLResponse | null>
+>();
+
+function dedupeKey(request: RequestParameters, variables: Variables): string {
+  const { cacheID, id, name } = request as RequestWithCacheID;
+
+  return `${cacheID ?? id ?? name}:${JSON.stringify(variables)}`;
+}
+
+async function fetchGraphQL(
   request: RequestParameters,
   variables: Variables,
 ): Promise<GraphQLResponseWithoutData | GraphQLResponse | null> {
   'use cache: remote';
   cacheLife('poc');
 
-  // Abort when this cached render is no longer needed
   const signal = cacheSignal();
 
-  let resp: Response;
-
   try {
-    resp = await graphql(request.text as string, {
+    const text = request.text;
+
+    if (!text) return null;
+
+    const data = await github.graphql(text, {
       ...variables,
-      headers: {
-        authorization: `token ${process.env.GITHUB_TOKEN as string}`,
-      },
-      ...(signal && { request: { signal } }),
+      request: signal ? { signal } : undefined,
     });
+
+    return { data } as GraphQLResponseWithData;
   } catch (error) {
-    // If the cache lifetime has ended, ignore abort errors
     if (!signal?.aborted) {
       console.error('Network fetch error', error);
     }
     return null;
   }
+}
 
-  return { data: resp } as GraphQLResponseWithData;
+/**
+ * Public API used by Relay server helpers.
+ */
+export function networkFetch(
+  request: RequestParameters,
+  variables: Variables,
+): Promise<GraphQLResponseWithoutData | GraphQLResponse | null> {
+  const key = dedupeKey(request, variables);
+
+  const existing = pending.get(key);
+  if (existing) return existing;
+
+  const p = fetchGraphQL(request, variables).finally(() => {
+    pending.delete(key);
+  });
+
+  pending.set(key, p);
+  return p;
 }

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Suspense, use } from 'react';
 
+import { ALLOWED_REPOS } from '@/constants/options';
 import Owner from '@/views/Owner';
 
 export default function Page({
@@ -18,7 +19,7 @@ export default function Page({
 function Route({ owner }: { owner: Promise<string> }) {
   const path = use(owner);
 
-  if (!['vercel', 'facebook', 'oven-sh'].includes(path)) notFound();
+  if (!ALLOWED_REPOS.includes(path)) notFound();
 
   return <Owner owner={path} />;
 }

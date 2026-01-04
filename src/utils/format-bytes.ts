@@ -1,3 +1,5 @@
+import 'server-only';
+
 export function formatBytes(bytes: number): string {
   if (!Number.isFinite(bytes) || bytes < 0) return '0 Bytes';
 

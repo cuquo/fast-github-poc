@@ -1,23 +1,27 @@
+import 'server-only';
+
 import { notFound } from 'next/navigation';
 import { Suspense, use } from 'react';
 
-import PRStatus from '@/components/pr-status';
-import PullSidebar from '@/components/pull-sidebar';
-import PullSidebarSkeleton from '@/components/pull-sidebar-skeleton';
+import { PerformanceMarker } from '@/components/performance-marker';
+import DiffEntries from '@/components/pull-request/diff-entries';
+import PRStatus from '@/components/pull-request/pr-status';
+import PullRequestSidebar from '@/components/pull-request/pull-request-sidebar';
+import PullSidebarSkeleton from '@/components/pull-request/pull-sidebar-skeleton';
+import { ALLOWED_REPOS } from '@/constants/options';
 import PullRequestQueryNode, {
-  type PullRequestQuery,
   type PullRequestQuery$data,
 } from '@/graphql/queries/__generated__/PullRequestQuery.graphql';
-import {
-  getQueryFromRelayStore,
-  loadSerializableQuery,
-} from '@/graphql/relay/load-serializable-query';
+import { pullRequestQueryCache } from '@/graphql/queries/PullRequestQueryCache';
+import { getQueryFromRelayStore } from '@/graphql/relay/load-serializable-query';
 import CodeIcon from '@/icons/code-icon';
 import CommentIcon from '@/icons/comment-icon';
 import CopyIcon from '@/icons/copy-icon';
 import SidebarCollapseIcon from '@/icons/sidebar-collapse-icon';
 import SidebarExpandIcon from '@/icons/sidebar-expand-icon';
 import TriangleDownIcon from '@/icons/triangle-down-icon';
+import { numberFormatter } from '@/utils/number-formatter';
+import { getInitialPatches } from '@/utils/pr-files-waterfall';
 
 export default function PullRequest({
   data,
@@ -26,24 +30,13 @@ export default function PullRequest({
 }) {
   const { prId, owner, name } = use(data);
 
-  if (!['vercel', 'facebook', 'oven-sh'].includes(owner)) notFound();
+  if (!ALLOWED_REPOS.includes(owner)) notFound();
 
-  use(
-    loadSerializableQuery<typeof PullRequestQueryNode, PullRequestQuery>(
-      PullRequestQueryNode,
-      {
-        after: null,
-        name,
-        number: prId,
-        owner,
-      },
-    ),
-  );
+  use(pullRequestQueryCache(owner, name, prId));
 
   const { repository } = getQueryFromRelayStore<PullRequestQuery$data>(
     PullRequestQueryNode,
     {
-      after: null,
       name,
       number: prId,
       owner,
@@ -51,6 +44,12 @@ export default function PullRequest({
   );
 
   if (!repository || !repository.pullRequest) notFound();
+
+  const initial = use(getInitialPatches(owner, name, prId));
+
+  if (!initial) notFound();
+
+  const { first, hasMore, remainderNonRoot, remainderRoot } = initial;
 
   const pullRequest = repository.pullRequest;
   const {
@@ -80,9 +79,12 @@ export default function PullRequest({
     headRepository !== null;
   const baseRepositoryOwner = baseRepository?.owner.login;
   const headRepositoryOwner = headRepository?.owner.login;
+  // activate Scroll Markers only for PRs with <= 100 changed files
+  const hasEnhancedSidebar = changedFiles > 1 && changedFiles <= 100;
 
   return (
     <>
+      <PerformanceMarker name={`[PrDiff]-start`} type="mark" />
       <input
         className="show-sidebar-state hidden"
         defaultChecked
@@ -108,14 +110,14 @@ export default function PullRequest({
           <div className="wrap-break-word block min-w-0 select-none text-fg-muted md:ml-2">
             {authorLogin && (
               <span
-                className="max-w-[125px] truncate font-semibold underline"
+                className="max-w-31.25 truncate font-semibold underline"
                 {...(authorName && { title: authorName })}
               >
                 {authorLogin}
               </span>
             )}
             {` ${commitAction} ${totalCommits} ${totalCommits === 1 ? 'commit' : 'commits'} into `}
-            <div className="inline-flex flex-wrap rounded-(--borderRadius-medium) bg-[#388bfd1a] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
+            <div className="inline-flex flex-wrap rounded-(--borderRadius-medium) bg-[#131D2E] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
               {sameRepo ? (
                 <span className="max-w-[80vw] truncate">{baseRefName}</span>
               ) : (
@@ -129,7 +131,7 @@ export default function PullRequest({
               )}
             </div>
             {` from `}
-            <div className="inline-flex flex-wrap rounded-(--borderRadius-medium) bg-[#388bfd1a] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
+            <div className="inline-flex flex-wrap rounded-(--borderRadius-medium) bg-[#131D2E] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
               {sameRepo ? (
                 <span className="max-w-[80vw] truncate">{headRefName}</span>
               ) : (
@@ -185,20 +187,24 @@ export default function PullRequest({
             <div className="sm:border-b-(length:--borderWidth-thin) flex h-10 min-w-4 select-none items-center border-border-default sm:flex sm:w-full">
               <div className="md:mask-l-from-50% md:mask-l-to-95% flex w-full md:justify-end">
                 <span className="hidden gap-1 font-semibold text-xs md:flex">
-                  <span className="text-[#3fb950]">
-                    +{new Intl.NumberFormat('en-US').format(additions) ?? 0}
-                  </span>
-                  <span className="text-[#f85149]">
-                    -{new Intl.NumberFormat('en-US').format(deletions) ?? 0}
-                  </span>
+                  {additions > 0 && (
+                    <span className="text-[#3fb950]">
+                      +{numberFormatter.format(additions) ?? 0}
+                    </span>
+                  )}
+                  {deletions > 0 && (
+                    <span className="text-[#f85149]">
+                      -{numberFormatter.format(deletions) ?? 0}
+                    </span>
+                  )}
                 </span>
               </div>
             </div>
           </nav>
         </div>
       </div>
-      <div className="-mt-15 top-0 left-15 z-9 hidden h-15 w-0 md:sticky md:block lg:left-0">
-        <div className="relative flex h-[59px] w-[calc(100vw-243px)] bg-bg-default lg:ml-17 lg:w-[calc(100vw-259px)]">
+      <div className="top-0 left-15 z-9 -mt-15 hidden h-15 w-0 md:sticky md:block lg:left-0">
+        <div className="relative flex h-14.75 w-[calc(100vw-243px)] bg-bg-default lg:ml-17 lg:w-[calc(100vw-259px)]">
           <div className="flex h-full w-full items-center">
             <PRStatus className="mb-2 md:mb-0" state={state} />
             <div className="ml-2 flex w-full min-w-0 flex-col">
@@ -224,7 +230,7 @@ export default function PullRequest({
                     </span>
                   )}
                   <span className="mx-1 shrink-0">{` ${commitAction} ${totalCommits} ${totalCommits === 1 ? 'commit' : 'commits'} into `}</span>
-                  <span className="inline-flex min-w-0 max-w-[25vw] shrink truncate rounded-(--borderRadius-medium) bg-[#388bfd1a] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
+                  <span className="inline-flex min-w-0 max-w-[25vw] shrink truncate rounded-(--borderRadius-medium) bg-[#131D2E] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
                     <span className="truncate">
                       {sameRepo
                         ? baseRefName
@@ -232,7 +238,7 @@ export default function PullRequest({
                     </span>
                   </span>
                   <span className="mx-1 shrink-0">{` from `}</span>
-                  <span className="inline-flex min-w-0 max-w-[25vw] shrink truncate rounded-(--borderRadius-medium) bg-[#388bfd1a] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
+                  <span className="inline-flex min-w-0 max-w-[25vw] shrink truncate rounded-(--borderRadius-medium) bg-[#131D2E] px-1.5 py-0.5 font-mono text-fg-accent text-xs leading-normal">
                     <span className="truncate">
                       {sameRepo
                         ? headRefName
@@ -247,21 +253,21 @@ export default function PullRequest({
         </div>
       </div>
       <div className="info-sticky sticky top-0 z-8 flex h-15 w-full">
-        <div className="relative h-[60px] w-full min-w-0 md:contain-strict">
-          <div className="absolute h-[59px] w-full bg-bg-default" />
+        <div className="relative h-15 w-full min-w-0 md:contain-strict">
+          <div className="absolute h-14.75 w-full bg-bg-default" />
           <div className="absolute bottom-0 left-4 h-px w-[calc(100%-32px)] bg-[#3d444d] md:left-6 md:w-[calc(100%-48px)] lg:left-8 lg:w-[calc(100%-64px)]" />
-          <div className="relative flex h-30 w-full items-start px-4 md:px-6 lg:px-8">
-            <div className="-z-1 -mt-px sticky top-0 left-0 block h-15 w-0">
-              <div className="-ml-4 md:-ml-6 lg:-ml-8 h-15 w-screen bg-[#3d444d]" />
+          <div className="relative flex h-15 w-full items-start px-4 md:h-30 md:px-6 lg:px-8">
+            <div className="sticky top-0 left-0 -z-1 -mt-px block h-15 w-0">
+              <div className="-ml-4 h-15 w-screen bg-[#3d444d] md:-ml-6 lg:-ml-8" />
             </div>
             <label
-              className="show-sidebar-button pointer-events-none mt-4 flex size-7 shrink-0 select-none items-center justify-center rounded-(--borderRadius-medium) lg:pointer-events-auto lg:cursor-pointer lg:hover:bg-[#656c7633]!"
+              className="show-sidebar-button pointer-events-none mt-4 flex size-7 shrink-0 select-none items-center justify-center rounded-(--borderRadius-medium) lg:pointer-events-auto lg:cursor-pointer lg:hover:bg-[#2D3239]!"
               htmlFor="show-sidebar"
             >
               <SidebarExpandIcon className="sidebar-expand-icon hidden fill-fg-muted lg:block" />
               <SidebarCollapseIcon className="sidebar-collapse-icon fill-fg-muted lg:hidden" />
             </label>
-            <div className="border-(length:--borderWidth-thin) sticky mt-4 ml-2 flex h-7 shrink-0 transform-gpu items-center rounded-(--borderRadius-medium) border-[#3d444d] bg-[#212830] px-2 md:top-[65px]">
+            <div className="border-(length:--borderWidth-thin) sticky mt-4 ml-2 flex h-7 shrink-0 transform-gpu items-center rounded-(--borderRadius-medium) border-[#3d444d] bg-[#212830] px-2 md:top-16.25">
               <span className="select-none font-medium text-xs">
                 All commits
               </span>
@@ -283,12 +289,21 @@ export default function PullRequest({
         precedence="medium"
         rel="stylesheet"
       />
-      <div className="mainNav flex w-full px-4 md:px-6 lg:px-8">
+      <div className="mainNav flex w-full bg-bg-default px-4 md:px-6 lg:px-8">
         <Suspense fallback={<PullSidebarSkeleton />}>
-          <PullSidebar name={name} owner={owner} prId={prId} />
+          <PullRequestSidebar name={name} owner={owner} prId={prId} />
         </Suspense>
-        <div className="prc flex w-full pt-4 lg:pl-4">
-          <div className="h-[1000px]">PR Diff (WIP)</div>
+        <div className="prc flex w-full min-w-0 flex-col bg-bg-default pt-4 lg:pl-4">
+          <DiffEntries
+            first={first}
+            hasEnhancedSidebar={hasEnhancedSidebar}
+            hasMore={hasMore}
+            name={name}
+            owner={owner}
+            prId={prId}
+            remainderNonRoot={remainderNonRoot}
+            remainderRoot={remainderRoot}
+          />
         </div>
       </div>
     </>

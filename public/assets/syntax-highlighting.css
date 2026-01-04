@@ -121,3 +121,96 @@
   text-decoration: underline;
   color: var(--color-prettylights-syntax-constant-other-reference-link);
 }
+
+.diff-code pre {
+  text-wrap: auto;
+}
+
+.f-sidebar:not(:hover, :has(:focus-visible)) a:target-current {
+  background-color: #151A20;
+  scroll-snap-align: center;
+}
+
+.f-sidebar:not(:hover, :has(:focus-visible)) {
+  scroll-snap-type: y mandatory;
+  scroll-target-group: auto;
+}
+
+.f-sidebar:not(:hover, :has(:focus-visible))::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  opacity: 0 !important;
+  width: 0px !important;
+  height: 0px !important;
+}
+
+.shiki {
+  background-color: transparent !important;
+}
+
+.line span {
+  word-wrap: anywhere;
+}
+
+@keyframes detect-scroll {
+	from,
+	to {
+		--can-scroll: ;
+	}
+}
+
+.sidebar {
+	animation: detect-scroll;
+	animation-timeline: --scroll-timeline;
+	animation-fill-mode: none;
+}
+
+.sidebar::before,
+.sidebar::after {
+	--visibility-if-can-scroll: var(--can-scroll) visible;
+	--visibility-if-cant-scroll: hidden;
+	visibility: var(--visibility-if-can-scroll, var(--visibility-if-cant-scroll));
+}
+
+.topShadow::before,
+.bottomShadow::before {
+	content: '';
+  contain: paint;
+	display: block;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	height: 64px;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0;
+  animation: reveal linear both;
+  animation-timeline: --scroll-timeline;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+
+.topShadow::before {
+  animation-range: 0px 24px;
+  background: linear-gradient(to bottom, rgb(13, 17, 23), rgba(13, 17, 23, 0));
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+@keyframes reveal {
+  to { opacity: 1; }
+}
+
+.sidebar {
+	scroll-timeline: --scroll-timeline y;
+}
+
+.bottomShadow::before {
+	animation-direction: reverse;
+	animation-range: calc(100% - 24px) 100%;
+	background: linear-gradient(to top, rgb(13, 17, 23), rgba(13, 17, 23, 0));
+  bottom: 0;
+}

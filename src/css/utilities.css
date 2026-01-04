@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: root rules */
 @utility collapse-folder-state {
   &:checked + .prItem .collapse-button svg {
     @apply -rotate-90;
@@ -27,7 +28,7 @@
 
 @utility sidebar-container {
   &:hover .prSep {
-    @apply border-[#3d444db3];
+    @apply border-[#2F353D];
   }
 }
 
@@ -36,5 +37,43 @@
     contain: strict;
     content-visibility: auto;
     contain-intrinsic-size: auto 32px;
+  }
+}
+
+@utility collapse-diff-state {
+  &:checked + .diffBlock .collapse-diff-button svg {
+    @apply -rotate-90;
+  }
+
+  &:checked + .diffBlock {
+    contain-intrinsic-size: auto 83px !important;
+    @media (min-width: 34rem) {
+      contain-intrinsic-size: auto 62px !important;
+    }
+  }
+
+  &:checked + .diffBlock .diffContent {
+    @apply hidden;
+  }
+
+  &:not(:checked) + .diffBlock .diffContent {
+    @apply block;
+  }
+
+  &:checked + .diffBlock .diffHeader {
+    @apply rounded-b-(--borderRadius-medium);
+  }
+}
+
+@utility diffBlock {
+  &:target .difWrapper {
+    box-shadow: 0 0 0 2.5px #1f6feb;
+    border-radius: var(--borderRadius-medium);
+  }
+  &:target .fakeBorder {
+    background-color: #1f6feb;
+  }
+  &:target .difWrapper .diffHeader {
+    border-top-color: #1f6feb;
   }
 }

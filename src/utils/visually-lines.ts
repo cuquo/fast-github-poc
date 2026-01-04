@@ -1,3 +1,5 @@
+import 'server-only';
+
 /*
   Line helpers (outside the component)
   - isVisuallyEmpty: a line that contains only tags/nbsp

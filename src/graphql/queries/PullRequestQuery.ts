@@ -6,9 +6,13 @@ export const PullRequestQuery = graphql`
     $owner: String!
     $name: String!
     $number: Int!
-    $after: String
   ) {
     repository(owner: $owner, name: $name) {
+      description
+      openGraphImageUrl
+      owner {
+        avatarUrl
+      }
       pullRequest(number: $number) {
         id
         number
@@ -89,10 +93,6 @@ export const PullRequestQuery = graphql`
           ... on User {
             name
           }
-        }
-
-        files(first: 100, after: $after) {
-          ...PRFilesFragment
         }
       }
     }
