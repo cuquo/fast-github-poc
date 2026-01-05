@@ -2,6 +2,7 @@ import 'server-only';
 
 import { Suspense, use } from 'react';
 
+import type { TreeFragment$data } from '@/graphql/fragments/__generated__/TreeFragment.graphql';
 import BlobByOidQueryNode, {
   type BlobByOidQuery,
 } from '@/graphql/queries/__generated__/BlobByOidQuery.graphql';
@@ -10,7 +11,6 @@ import BlobByPathQueryNode, {
 } from '@/graphql/queries/__generated__/BlobByPathQuery.graphql';
 import { loadSerializableQuery } from '@/graphql/relay/load-serializable-query';
 
-import type { TreeFragment$data } from '../graphql/fragments/__generated__/TreeFragment.graphql';
 import Markdown from './markdown';
 import TextSkeleton from './text-skeleton';
 

@@ -2,23 +2,27 @@ import 'server-only';
 
 import { clsx } from 'clsx/lite';
 import { cacheLife } from 'next/cache';
-import Link from 'next/link';
-import { cacheSignal, use } from 'react';
+import { cacheSignal } from 'react';
 
+import { DIFFS_PER_PAGE, SIZE_TO_PREFETCH } from '@/constants/options';
+import type { TreeFragment$data } from '@/graphql/fragments/__generated__/TreeFragment.graphql';
+import { pullRequestQueryCache } from '@/graphql/queries/PullRequestQueryCache';
 import DirectoryIcon from '@/icons/directory-icon';
 import FileIcon from '@/icons/file-icon';
 import SymlinkIcon from '@/icons/symlink-icon';
+import { github } from '@/utils/github-octokit';
 
-import { SIZE_TO_PREFETCH } from '../constants/options';
-import type { TreeFragment$data } from '../graphql/fragments/__generated__/TreeFragment.graphql';
+import Link from './link';
 
-const API = 'https://api.github.com';
+type ListCommitsItem = Awaited<
+  ReturnType<typeof github.rest.repos.listCommits>
+>['data'][number];
 
-type LastCommit = {
-  sha: string;
-  html_url: string;
-  commit: { author?: { date?: string; name?: string }; message: string };
-  author?: { login?: string; avatar_url?: string };
+type CommitFilesCount = number;
+
+type LastCommitInfo = {
+  commit: ListCommitsItem | null;
+  filesCount: CommitFilesCount | null;
 };
 
 const toPath = (e: NonNullable<TreeFragment$data['entries']>[number]) =>
@@ -28,66 +32,79 @@ async function fetchLastCommit(
   owner: string,
   repo: string,
   path: string,
-  token: string,
   branch = 'HEAD',
-): Promise<LastCommit | null> {
+): Promise<ListCommitsItem | null> {
   'use cache: remote';
   cacheLife('poc');
-
-  const url = new URL(`${API}/repos/${owner}/${repo}/commits`);
-  url.searchParams.set('sha', branch);
-  url.searchParams.set('path', path);
-  url.searchParams.set('per_page', '1');
 
   const signal = cacheSignal();
 
   try {
-    const res = await fetch(url.toString(), {
-      headers: {
-        Accept: 'application/vnd.github+json',
-        'Accept-Encoding': 'gzip, deflate, br',
-        Authorization: `Bearer ${token}`,
-      },
-      next: { revalidate: 3600 },
-      signal: signal ?? undefined,
+    const { data } = await github.rest.repos.listCommits({
+      owner,
+      path,
+      per_page: 1,
+      repo,
+      request: signal ? { signal } : undefined,
+      sha: branch,
     });
 
-    if (!res.ok) {
-      if (!signal?.aborted) {
-        console.error(
-          `Failed to fetch last commit for ${owner}/${repo}/${path}: ${res.status} ${res.statusText}`,
-        );
-      }
-      return null;
+    return data?.[0];
+  } catch (error) {
+    // Ignore abort errors triggered by React's cache cancellation
+    if (!signal?.aborted) {
+      console.error('Markdown render error', error);
     }
 
-    const arr = (await res.json()) as LastCommit[];
-    return arr[0] ?? null;
-  } catch (err: unknown) {
-    if (!signal?.aborted) {
-      console.error(`Error fetching commit for ${owner}/${repo}/${path}:`, err);
-    }
     return null;
   }
+}
+
+async function fetchLastCommitInfo(
+  owner: string,
+  name: string,
+  path: string,
+  branch = 'HEAD',
+): Promise<LastCommitInfo> {
+  const commit = await fetchLastCommit(owner, name, path, branch);
+  const message = commit?.commit?.message;
+  const commitMessage =
+    message && typeof message === 'string' ? message.split('\n')[0] : null;
+
+  const prId = commitMessage?.match(/#(\d+)/)?.[1] ?? null;
+
+  let filesCount: CommitFilesCount | null = null;
+
+  if (prId) {
+    const data = await pullRequestQueryCache(owner, name, Number(prId));
+
+    if (
+      typeof data?.response?.data?.repository?.pullRequest?.changedFiles ===
+      'number'
+    ) {
+      filesCount = data.response.data.repository.pullRequest.changedFiles;
+    }
+  }
+
+  return { commit, filesCount };
 }
 
 function fetchLastCommitsForEntries(
   owner: string,
   repo: string,
   entries: NonNullable<TreeFragment$data['entries']>,
-  token: string,
   branch = 'HEAD',
 ) {
   return Promise.all(
     entries.map((e) =>
-      fetchLastCommit(owner, repo, e.path || toPath(e), token, branch).then(
-        (c) => [toPath(e), c] as const,
+      fetchLastCommitInfo(owner, repo, e.path || toPath(e), branch).then(
+        (info) => [toPath(e), info] as const,
       ),
     ),
   );
 }
 
-export default function ListFilesWithCommits({
+export default async function ListFilesWithCommits({
   owner,
   repo,
   branch,
@@ -98,23 +115,17 @@ export default function ListFilesWithCommits({
   branch: string;
   files: NonNullable<TreeFragment$data['entries']>;
 }) {
-  const hasShowMore = files.length > 14;
+  const hasShowMore = false;
 
-  const results = use(
-    fetchLastCommitsForEntries(
-      owner,
-      repo,
-      files,
-      process.env.GITHUB_TOKEN as string,
-      branch,
-    ),
-  );
+  const results = await fetchLastCommitsForEntries(owner, repo, files, branch);
 
-  const commitsMap = new Map(results) as Map<string, LastCommit | null>;
+  const commitsMap = new Map(results);
 
   return files.map((file, index) => {
     const path = toPath(file);
-    const commit = commitsMap.get(path) ?? null;
+    const info = commitsMap.get(path) ?? null;
+    const commit = info?.commit ?? null;
+    const filesCount = info?.filesCount ?? null;
     const message = commit?.commit.message;
 
     let commitMessage =
@@ -171,7 +182,11 @@ export default function ListFilesWithCommits({
                   <Link
                     className="select-none text-fg-accent hover:text-dodger-blue hover:underline"
                     href={`/${owner}/${repo}/pull/${pr}`}
-                    prefetch
+                    prefetch={
+                      typeof filesCount === 'number'
+                        ? filesCount <= DIFFS_PER_PAGE
+                        : false
+                    }
                     title={message}
                   >
                     #{pr}

@@ -2,9 +2,9 @@ import 'server-only';
 
 import { clsx } from 'clsx/lite';
 
-import GitCloseIcon from '../icons/git-close-icon';
-import GitMergeIcon from '../icons/git-merge-icon';
-import GitOpenIcon from '../icons/git-open-icon';
+import GitCloseIcon from '@/icons/git-close-icon';
+import GitMergeIcon from '@/icons/git-merge-icon';
+import GitOpenIcon from '@/icons/git-open-icon';
 
 export default function PRStatus({
   className,
@@ -16,7 +16,7 @@ export default function PRStatus({
   return (
     <div
       className={clsx(
-        'border-(length:--borderWidth-thin) flex h-[30px] w-fit select-none items-center rounded-full px-3 font-medium capitalize',
+        'border-(length:--borderWidth-thin) flex h-7.5 w-fit select-none items-center rounded-full px-3 font-medium capitalize',
         state === 'merged' && 'border-[#8957e5] bg-[#8957e5]',
         state === 'open' && 'border-[#238636] bg-[#238636]',
         state === 'closed' && 'border-[#da3633] bg-[#da3633]',

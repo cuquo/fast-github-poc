@@ -2,7 +2,6 @@
 import 'server-only';
 
 import { clsx } from 'clsx/lite';
-import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { SIZE_TO_PREFETCH } from '@/constants/options';
@@ -14,6 +13,7 @@ import HistoryIcon from '@/icons/history-icon';
 import SymlinkIcon from '@/icons/symlink-icon';
 import { extractCommitMessageAndPr } from '@/utils/extract-commit-message-pr';
 
+import Link from './link';
 import ListFilesWithCommits from './list-files-with-commits';
 
 type lastCommitInfo = {
@@ -215,7 +215,7 @@ export default function ListFiles({
                         <>
                           <Link
                             href={`/${owner}/${repo}/pull/${pr}`}
-                            prefetch
+                            prefetch={false}
                           >{`#${pr}`}</Link>
                           {`)`}
                         </>
@@ -223,7 +223,7 @@ export default function ListFiles({
                     </span>
                     {lastCommitInfo.commitBody && (
                       <label
-                        className="show-more-commit-button ml-auto flex size-7 shrink-0 cursor-pointer select-none items-center justify-center rounded-(--borderRadius-medium) hover:bg-[#656c7633]! sm:mr-2 sm:ml-0"
+                        className="show-more-commit-button ml-auto flex size-7 shrink-0 cursor-pointer select-none items-center justify-center rounded-(--borderRadius-medium) hover:bg-[#2D3239]! sm:mr-2 sm:ml-0"
                         htmlFor="show-more-commit"
                       >
                         <EllipsisIcon className="fill-fg-muted" />
@@ -237,7 +237,7 @@ export default function ListFiles({
                     {lastCommitInfo.totalCommits && (
                       <div
                         className={clsx(
-                          'border-(length:--borderWidth-thin) flex h-7 items-center rounded-(--borderRadius-medium) border-transparent! px-2 hover:bg-[#656c7633]!',
+                          'border-(length:--borderWidth-thin) flex h-7 items-center rounded-(--borderRadius-medium) border-transparent! px-2 hover:bg-[#2D3239]!',
                           lastCommitInfo.commitBody
                             ? 'ml-2'
                             : 'ml-auto sm:ml-2',
@@ -255,7 +255,7 @@ export default function ListFiles({
               {lastCommitInfo.commitBody && (
                 <tr className="commit-content border-b-(length:--borderWidth-thin) relative hidden border-border-default bg-bg-muted">
                   <td colSpan={3}>
-                    <span className="-top-1 absolute left-1 flex h-px w-[calc(100%-8px)] bg-border-default" />
+                    <span className="absolute -top-1 left-1 flex h-px w-[calc(100%-8px)] bg-border-default" />
                     <span className="inline-flex w-full whitespace-pre px-5 pt-1.5 pb-3 text-fg-muted text-xs leading-4.5 [text-wrap-mode:wrap]">
                       {lastCommitInfo.commitBody}
                     </span>

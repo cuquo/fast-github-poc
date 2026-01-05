@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd20783e47b49f65e55cc420c2c560ff>>
+ * @generated SignedSource<<28441ec55a6195d07fe4bebfa002f1e2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,12 +44,17 @@ export type BlobByPathQuery$data = {
         };
       } | null | undefined;
     } | null | undefined;
+    readonly description: string | null | undefined;
     readonly object: {
       readonly byteSize?: number;
       readonly isBinary?: boolean | null | undefined;
       readonly isTruncated?: boolean;
       readonly text?: string | null | undefined;
     } | null | undefined;
+    readonly openGraphImageUrl: any;
+    readonly owner: {
+      readonly avatarUrl: any;
+    };
   } | null | undefined;
 };
 export type BlobByPathQuery = {
@@ -95,14 +100,35 @@ v5 = [
     "variableName": "owner"
   }
 ],
-v6 = [
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "description",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "openGraphImageUrl",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "avatarUrl",
+  "storageKey": null
+},
+v9 = [
   {
     "kind": "Variable",
     "name": "expression",
     "variableName": "expr"
   }
 ],
-v7 = {
+v10 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -137,62 +163,62 @@ v7 = {
   "type": "Blob",
   "abstractKey": null
 },
-v8 = {
+v11 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v9 = [
-  (v8/*: any*/),
+v12 = [
+  (v11/*: any*/),
   {
     "kind": "Variable",
     "name": "path",
     "variableName": "path"
   }
 ],
-v10 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "oid",
   "storageKey": null
 },
-v11 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "abbreviatedOid",
   "storageKey": null
 },
-v12 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "messageHeadline",
   "storageKey": null
 },
-v13 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v14 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v15 = {
+v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "login",
   "storageKey": null
 },
-v16 = {
+v19 = {
   "alias": null,
   "args": [
     {
@@ -205,24 +231,24 @@ v16 = {
   "name": "avatarUrl",
   "storageKey": "avatarUrl(size:40)"
 },
-v17 = [
-  (v8/*: any*/)
+v20 = [
+  (v11/*: any*/)
 ],
-v18 = {
+v21 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "number",
   "storageKey": null
 },
-v19 = {
+v22 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v20 = {
+v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -250,15 +276,29 @@ return {
         "name": "repository",
         "plural": false,
         "selections": [
+          (v6/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": null,
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "owner",
+            "plural": false,
+            "selections": [
+              (v8/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v9/*: any*/),
             "concreteType": null,
             "kind": "LinkedField",
             "name": "object",
             "plural": false,
             "selections": [
-              (v7/*: any*/)
+              (v10/*: any*/)
             ],
             "storageKey": null
           },
@@ -288,7 +328,7 @@ return {
                         "selections": [
                           {
                             "alias": null,
-                            "args": (v9/*: any*/),
+                            "args": (v12/*: any*/),
                             "concreteType": "CommitHistoryConnection",
                             "kind": "LinkedField",
                             "name": "history",
@@ -302,10 +342,10 @@ return {
                                 "name": "nodes",
                                 "plural": true,
                                 "selections": [
-                                  (v10/*: any*/),
-                                  (v11/*: any*/),
-                                  (v12/*: any*/),
                                   (v13/*: any*/),
+                                  (v14/*: any*/),
+                                  (v15/*: any*/),
+                                  (v16/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -314,7 +354,7 @@ return {
                                     "name": "author",
                                     "plural": false,
                                     "selections": [
-                                      (v14/*: any*/),
+                                      (v17/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -323,9 +363,9 @@ return {
                                         "name": "user",
                                         "plural": false,
                                         "selections": [
-                                          (v15/*: any*/),
-                                          (v13/*: any*/),
-                                          (v16/*: any*/)
+                                          (v18/*: any*/),
+                                          (v16/*: any*/),
+                                          (v19/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -334,7 +374,7 @@ return {
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v17/*: any*/),
+                                    "args": (v20/*: any*/),
                                     "concreteType": "PullRequestConnection",
                                     "kind": "LinkedField",
                                     "name": "associatedPullRequests",
@@ -348,8 +388,8 @@ return {
                                         "name": "nodes",
                                         "plural": true,
                                         "selections": [
-                                          (v18/*: any*/),
-                                          (v13/*: any*/)
+                                          (v21/*: any*/),
+                                          (v16/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -401,17 +441,33 @@ return {
         "name": "repository",
         "plural": false,
         "selections": [
+          (v6/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": null,
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "owner",
+            "plural": false,
+            "selections": [
+              (v22/*: any*/),
+              (v8/*: any*/),
+              (v23/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v9/*: any*/),
             "concreteType": null,
             "kind": "LinkedField",
             "name": "object",
             "plural": false,
             "selections": [
-              (v19/*: any*/),
-              (v7/*: any*/),
-              (v20/*: any*/)
+              (v22/*: any*/),
+              (v10/*: any*/),
+              (v23/*: any*/)
             ],
             "storageKey": null
           },
@@ -436,13 +492,13 @@ return {
                     "name": "target",
                     "plural": false,
                     "selections": [
-                      (v19/*: any*/),
+                      (v22/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
                           {
                             "alias": null,
-                            "args": (v9/*: any*/),
+                            "args": (v12/*: any*/),
                             "concreteType": "CommitHistoryConnection",
                             "kind": "LinkedField",
                             "name": "history",
@@ -456,10 +512,10 @@ return {
                                 "name": "nodes",
                                 "plural": true,
                                 "selections": [
-                                  (v10/*: any*/),
-                                  (v11/*: any*/),
-                                  (v12/*: any*/),
                                   (v13/*: any*/),
+                                  (v14/*: any*/),
+                                  (v15/*: any*/),
+                                  (v16/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -468,7 +524,7 @@ return {
                                     "name": "author",
                                     "plural": false,
                                     "selections": [
-                                      (v14/*: any*/),
+                                      (v17/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -477,10 +533,10 @@ return {
                                         "name": "user",
                                         "plural": false,
                                         "selections": [
-                                          (v15/*: any*/),
-                                          (v13/*: any*/),
+                                          (v18/*: any*/),
                                           (v16/*: any*/),
-                                          (v20/*: any*/)
+                                          (v19/*: any*/),
+                                          (v23/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -489,7 +545,7 @@ return {
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v17/*: any*/),
+                                    "args": (v20/*: any*/),
                                     "concreteType": "PullRequestConnection",
                                     "kind": "LinkedField",
                                     "name": "associatedPullRequests",
@@ -503,16 +559,16 @@ return {
                                         "name": "nodes",
                                         "plural": true,
                                         "selections": [
-                                          (v18/*: any*/),
-                                          (v13/*: any*/),
-                                          (v20/*: any*/)
+                                          (v21/*: any*/),
+                                          (v16/*: any*/),
+                                          (v23/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
                                     ],
                                     "storageKey": "associatedPullRequests(first:1)"
                                   },
-                                  (v20/*: any*/)
+                                  (v23/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -523,33 +579,33 @@ return {
                         "type": "Commit",
                         "abstractKey": null
                       },
-                      (v20/*: any*/)
+                      (v23/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v20/*: any*/)
+                  (v23/*: any*/)
                 ],
                 "storageKey": null
               }
             ]
           },
-          (v20/*: any*/)
+          (v23/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "90b2ae180080d9a4682ea029f490290d",
+    "cacheID": "172e2afe619515b03c1887531fe56d69",
     "id": null,
     "metadata": {},
     "name": "BlobByPathQuery",
     "operationKind": "query",
-    "text": "query BlobByPathQuery($owner:String!,$name:String!,$expr:String!,$withMeta:Boolean=false,$path:String){repository(owner:$owner,name:$name){object(expression:$expr){__typename,...on Blob{text,isBinary,isTruncated,byteSize},id},defaultBranchRef@include(if:$withMeta){target{__typename,...on Commit{history(first:1,path:$path){nodes{oid,abbreviatedOid,messageHeadline,url,author{name,user{login,url,avatarUrl(size:40),id}},associatedPullRequests(first:1){nodes{number,url,id}},id}}},id},id},id}}"
+    "text": "query BlobByPathQuery($owner:String!,$name:String!,$expr:String!,$withMeta:Boolean=false,$path:String){repository(owner:$owner,name:$name){description,openGraphImageUrl,owner{__typename,avatarUrl,id},object(expression:$expr){__typename,...on Blob{text,isBinary,isTruncated,byteSize},id},defaultBranchRef@include(if:$withMeta){target{__typename,...on Commit{history(first:1,path:$path){nodes{oid,abbreviatedOid,messageHeadline,url,author{name,user{login,url,avatarUrl(size:40),id}},associatedPullRequests(first:1){nodes{number,url,id}},id}}},id},id},id}}"
   }
 };
 })();
 
-(node as any).hash = "15927de6281a1c62761a202ea20cf329";
+(node as any).hash = "e5a986c48978b8e9aee2234ddf634cfd";
 
 export default node;

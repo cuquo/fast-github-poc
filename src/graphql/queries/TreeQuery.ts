@@ -9,6 +9,11 @@ export const TreeQuery = graphql`
 	$path: String
 ) {
 	repository(owner: $owner, name: $name) {
+		description
+		openGraphImageUrl
+		owner {
+			avatarUrl
+		}
 		files: object(expression: $expr) {
 			__typename
 			...TreeFragment @alias(as: "treeHierarchyFragment")

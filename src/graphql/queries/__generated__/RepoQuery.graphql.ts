@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f0f48eb51fb9702390d38c17f2efcf4>>
+ * @generated SignedSource<<991084fb3e79b80c8ba96d3d0072fc9c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -85,6 +85,7 @@ export type RepoQuery$data = {
     readonly isPrivate: boolean;
     readonly name: string;
     readonly nameWithOwner: string;
+    readonly openGraphImageUrl: any;
     readonly owner: {
       readonly __typename: string;
       readonly avatarUrl: any;
@@ -172,21 +173,28 @@ v8 = {
   "name": "homepageUrl",
   "storageKey": null
 },
-v9 = [
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "openGraphImageUrl",
+  "storageKey": null
+},
+v10 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 15
   }
 ],
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "login",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": [
     {
@@ -199,32 +207,32 @@ v11 = {
   "name": "avatarUrl",
   "storageKey": "avatarUrl(size:48)"
 },
-v12 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isPrivate",
   "storageKey": null
 },
-v13 = {
+v14 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v14 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v15 = [
-  (v14/*: any*/)
+v16 = [
+  (v15/*: any*/)
 ],
-v16 = {
+v17 = {
   "alias": "branches",
   "args": [
-    (v13/*: any*/),
+    (v14/*: any*/),
     {
       "kind": "Literal",
       "name": "refPrefix",
@@ -235,13 +243,13 @@ v16 = {
   "kind": "LinkedField",
   "name": "refs",
   "plural": false,
-  "selections": (v15/*: any*/),
+  "selections": (v16/*: any*/),
   "storageKey": "refs(first:1,refPrefix:\"refs/heads/\")"
 },
-v17 = {
+v18 = {
   "alias": "tags",
   "args": [
-    (v13/*: any*/),
+    (v14/*: any*/),
     {
       "kind": "Literal",
       "name": "refPrefix",
@@ -252,45 +260,45 @@ v17 = {
   "kind": "LinkedField",
   "name": "refs",
   "plural": false,
-  "selections": (v15/*: any*/),
+  "selections": (v16/*: any*/),
   "storageKey": "refs(first:1,refPrefix:\"refs/tags/\")"
 },
-v18 = {
+v19 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "oid",
   "storageKey": null
 },
-v19 = {
+v20 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "abbreviatedOid",
   "storageKey": null
 },
-v20 = {
+v21 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "committedDate",
   "storageKey": null
 },
-v21 = {
+v22 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "messageHeadline",
   "storageKey": null
 },
-v22 = {
+v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "messageBody",
   "storageKey": null
 },
-v23 = {
+v24 = {
   "alias": null,
   "args": [
     {
@@ -303,28 +311,28 @@ v23 = {
   "name": "avatarUrl",
   "storageKey": "avatarUrl(size:40)"
 },
-v24 = {
+v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v25 = [
+v26 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 6
   }
 ],
-v26 = {
+v27 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "state",
   "storageKey": null
 },
-v27 = {
+v28 = {
   "alias": null,
   "args": null,
   "concreteType": "CommitHistoryConnection",
@@ -333,11 +341,11 @@ v27 = {
   "plural": false,
   "selections": [
     (v3/*: any*/),
-    (v14/*: any*/)
+    (v15/*: any*/)
   ],
   "storageKey": null
 },
-v28 = {
+v29 = {
   "alias": null,
   "args": null,
   "concreteType": "RateLimit",
@@ -369,7 +377,7 @@ v28 = {
   ],
   "storageKey": null
 },
-v29 = {
+v30 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -427,9 +435,10 @@ return {
           (v6/*: any*/),
           (v7/*: any*/),
           (v8/*: any*/),
+          (v9/*: any*/),
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v10/*: any*/),
             "concreteType": "RepositoryTopicConnection",
             "kind": "LinkedField",
             "name": "repositoryTopics",
@@ -470,14 +479,14 @@ return {
             "plural": false,
             "selections": [
               (v3/*: any*/),
-              (v10/*: any*/),
-              (v11/*: any*/)
+              (v11/*: any*/),
+              (v12/*: any*/)
             ],
             "storageKey": null
           },
-          (v12/*: any*/),
-          (v16/*: any*/),
+          (v13/*: any*/),
           (v17/*: any*/),
+          (v18/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -500,11 +509,11 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v18/*: any*/),
                       (v19/*: any*/),
                       (v20/*: any*/),
                       (v21/*: any*/),
                       (v22/*: any*/),
+                      (v23/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -522,9 +531,9 @@ return {
                             "plural": false,
                             "selections": [
                               (v3/*: any*/),
-                              (v10/*: any*/),
-                              (v23/*: any*/),
-                              (v24/*: any*/)
+                              (v11/*: any*/),
+                              (v24/*: any*/),
+                              (v25/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -535,14 +544,14 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v25/*: any*/),
+                        "args": (v26/*: any*/),
                         "concreteType": "GitActorConnection",
                         "kind": "LinkedField",
                         "name": "authors",
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
-                          (v14/*: any*/),
+                          (v15/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -560,8 +569,8 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v3/*: any*/),
-                                  (v10/*: any*/),
-                                  (v23/*: any*/)
+                                  (v11/*: any*/),
+                                  (v24/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -582,11 +591,11 @@ return {
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
-                          (v26/*: any*/)
+                          (v27/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v27/*: any*/)
+                      (v28/*: any*/)
                     ],
                     "type": "Commit",
                     "abstractKey": null
@@ -600,7 +609,7 @@ return {
         ],
         "storageKey": null
       },
-      (v28/*: any*/)
+      (v29/*: any*/)
     ],
     "type": "Query",
     "abstractKey": null
@@ -651,7 +660,7 @@ return {
                         "storageKey": null
                       },
                       (v5/*: any*/),
-                      (v18/*: any*/),
+                      (v19/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -680,7 +689,7 @@ return {
                 "type": "Tree",
                 "abstractKey": null
               },
-              (v29/*: any*/)
+              (v30/*: any*/)
             ],
             "storageKey": "object(expression:\"HEAD:\")"
           },
@@ -688,9 +697,10 @@ return {
           (v6/*: any*/),
           (v7/*: any*/),
           (v8/*: any*/),
+          (v9/*: any*/),
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v10/*: any*/),
             "concreteType": "RepositoryTopicConnection",
             "kind": "LinkedField",
             "name": "repositoryTopics",
@@ -713,11 +723,11 @@ return {
                     "plural": false,
                     "selections": [
                       (v5/*: any*/),
-                      (v29/*: any*/)
+                      (v30/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v29/*: any*/)
+                  (v30/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -733,15 +743,15 @@ return {
             "plural": false,
             "selections": [
               (v3/*: any*/),
-              (v10/*: any*/),
               (v11/*: any*/),
-              (v29/*: any*/)
+              (v12/*: any*/),
+              (v30/*: any*/)
             ],
             "storageKey": null
           },
-          (v12/*: any*/),
-          (v16/*: any*/),
+          (v13/*: any*/),
           (v17/*: any*/),
+          (v18/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -761,15 +771,15 @@ return {
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
-                  (v29/*: any*/),
+                  (v30/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v18/*: any*/),
                       (v19/*: any*/),
                       (v20/*: any*/),
                       (v21/*: any*/),
                       (v22/*: any*/),
+                      (v23/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -787,10 +797,10 @@ return {
                             "plural": false,
                             "selections": [
                               (v3/*: any*/),
-                              (v10/*: any*/),
-                              (v23/*: any*/),
+                              (v11/*: any*/),
                               (v24/*: any*/),
-                              (v29/*: any*/)
+                              (v25/*: any*/),
+                              (v30/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -801,14 +811,14 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v25/*: any*/),
+                        "args": (v26/*: any*/),
                         "concreteType": "GitActorConnection",
                         "kind": "LinkedField",
                         "name": "authors",
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
-                          (v14/*: any*/),
+                          (v15/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -826,9 +836,9 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v3/*: any*/),
-                                  (v10/*: any*/),
-                                  (v23/*: any*/),
-                                  (v29/*: any*/)
+                                  (v11/*: any*/),
+                                  (v24/*: any*/),
+                                  (v30/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -849,12 +859,12 @@ return {
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
-                          (v26/*: any*/),
-                          (v29/*: any*/)
+                          (v27/*: any*/),
+                          (v30/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v27/*: any*/)
+                      (v28/*: any*/)
                     ],
                     "type": "Commit",
                     "abstractKey": null
@@ -862,28 +872,28 @@ return {
                 ],
                 "storageKey": null
               },
-              (v29/*: any*/)
+              (v30/*: any*/)
             ],
             "storageKey": null
           },
-          (v29/*: any*/)
+          (v30/*: any*/)
         ],
         "storageKey": null
       },
-      (v28/*: any*/)
+      (v29/*: any*/)
     ]
   },
   "params": {
-    "cacheID": "540af133127ef8d519a0681d8192c9f5",
+    "cacheID": "a690ad15e1f813c43daea14530bf786c",
     "id": null,
     "metadata": {},
     "name": "RepoQuery",
     "operationKind": "query",
-    "text": "query RepoQuery($owner:String!,$name:String!){repository(owner:$owner,name:$name){__typename,files:object(expression:\"HEAD:\"){__typename,...TreeFragment,id},name,nameWithOwner,description,homepageUrl,repositoryTopics(first:15){nodes{topic{name,id},id}},owner{__typename,login,avatarUrl(size:48),id},isPrivate,branches:refs(refPrefix:\"refs/heads/\",first:1){totalCount},tags:refs(refPrefix:\"refs/tags/\",first:1){totalCount},defaultBranchRef{__typename,name,target{__typename,...on Commit{__typename,oid,abbreviatedOid,committedDate,messageHeadline,messageBody,author{user{__typename,login,avatarUrl(size:40),url,id},__typename,name},authors(first:6){__typename,totalCount,nodes{user{__typename,login,avatarUrl(size:40),id},__typename,name}},statusCheckRollup{__typename,state,id},history{__typename,totalCount}},id},id},id},rateLimit{cost,remaining,resetAt}}fragment TreeFragment on Tree{entries{mode,name,oid,path,type,size}}"
+    "text": "query RepoQuery($owner:String!,$name:String!){repository(owner:$owner,name:$name){__typename,files:object(expression:\"HEAD:\"){__typename,...TreeFragment,id},name,nameWithOwner,description,homepageUrl,openGraphImageUrl,repositoryTopics(first:15){nodes{topic{name,id},id}},owner{__typename,login,avatarUrl(size:48),id},isPrivate,branches:refs(refPrefix:\"refs/heads/\",first:1){totalCount},tags:refs(refPrefix:\"refs/tags/\",first:1){totalCount},defaultBranchRef{__typename,name,target{__typename,...on Commit{__typename,oid,abbreviatedOid,committedDate,messageHeadline,messageBody,author{user{__typename,login,avatarUrl(size:40),url,id},__typename,name},authors(first:6){__typename,totalCount,nodes{user{__typename,login,avatarUrl(size:40),id},__typename,name}},statusCheckRollup{__typename,state,id},history{__typename,totalCount}},id},id},id},rateLimit{cost,remaining,resetAt}}fragment TreeFragment on Tree{entries{mode,name,oid,path,type,size}}"
   }
 };
 })();
 
-(node as any).hash = "1336a6fcbe565ad80b55d167c296f0c3";
+(node as any).hash = "acc1ddbb7e501f8e10f6bffdcfe60f4c";
 
 export default node;

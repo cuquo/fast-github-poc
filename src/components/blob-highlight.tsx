@@ -5,6 +5,7 @@ import { clsx } from 'clsx/lite';
 import { use } from 'react';
 
 import { NUMBER_OF_VISIBLE_LINES } from '@/constants/options';
+import { guessLanguageFromFile } from '@/utils/guess-language-from-file';
 import { renderHTML } from '@/utils/render-html';
 import { splitHighlightedHtmlIntoLines } from '@/utils/split-highlighted-html-into-lines';
 import {
@@ -25,20 +26,11 @@ export default function BlobHighlight({
 }) {
   if (isBinary) return <span>Binary file</span>;
 
-  let blobExtension = path.split('.').pop()?.toLowerCase();
-  blobExtension = blobExtension === 'eslintignore' ? 'ignore' : blobExtension;
-  blobExtension = blobExtension === 'prettierignore' ? 'ignore' : blobExtension;
-  blobExtension = blobExtension === 'plist' ? 'json' : blobExtension;
-  blobExtension = blobExtension === 'json' ? 'jsonc' : blobExtension;
-  blobExtension = path.toLowerCase().endsWith('cargo.lock')
-    ? 'toml'
-    : blobExtension;
-  blobExtension = path.toLowerCase().endsWith('.git-blame-ignore-revs')
-    ? 'ignore'
-    : blobExtension;
+  const language = guessLanguageFromFile(path);
 
-  const formatText = `\`\`\`${blobExtension ?? ''}\n${text}\n\`\`\``;
-  const blobText = use(renderHTML(formatText, context));
+  const blobText = use(renderHTML(text, context, language));
+
+  if (!blobText) return <span>Unable to render file.</span>;
 
   const hadTrailingNewline = text.endsWith('\n');
   const splitText = splitHighlightedHtmlIntoLines(blobText, hadTrailingNewline);

@@ -12,6 +12,7 @@ export const RepoQuery = graphql`
       nameWithOwner
       description
       homepageUrl
+      openGraphImageUrl
       repositoryTopics(first: 15) {
         nodes {
           topic {

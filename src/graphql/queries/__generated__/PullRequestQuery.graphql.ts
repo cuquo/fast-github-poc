@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20fc36bdd4e8dd9654881217cb23a6d5>>
+ * @generated SignedSource<<faae2f14ebdbe2c09d8e7fa4555b1dc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,19 +9,22 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
 export type CheckConclusionState = "ACTION_REQUIRED" | "CANCELLED" | "FAILURE" | "NEUTRAL" | "SKIPPED" | "STALE" | "STARTUP_FAILURE" | "SUCCESS" | "TIMED_OUT" | "%future added value";
 export type CheckStatusState = "COMPLETED" | "IN_PROGRESS" | "PENDING" | "QUEUED" | "REQUESTED" | "WAITING" | "%future added value";
 export type PullRequestState = "CLOSED" | "MERGED" | "OPEN" | "%future added value";
 export type StatusState = "ERROR" | "EXPECTED" | "FAILURE" | "PENDING" | "SUCCESS" | "%future added value";
 export type PullRequestQuery$variables = {
-  after?: string | null | undefined;
   name: string;
   number: number;
   owner: string;
 };
 export type PullRequestQuery$data = {
   readonly repository: {
+    readonly description: string | null | undefined;
+    readonly openGraphImageUrl: any;
+    readonly owner: {
+      readonly avatarUrl: any;
+    };
     readonly pullRequest: {
       readonly additions: number;
       readonly author: {
@@ -78,9 +81,6 @@ export type PullRequestQuery$data = {
       };
       readonly createdAt: any;
       readonly deletions: number;
-      readonly files: {
-        readonly " $fragmentSpreads": FragmentRefs<"PRFilesFragment">;
-      } | null | undefined;
       readonly headRefName: string;
       readonly headRefOid: any;
       readonly headRepository: {
@@ -110,24 +110,19 @@ const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "after"
+  "name": "name"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "name"
+  "name": "number"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "number"
-},
-v3 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
   "name": "owner"
 },
-v4 = [
+v3 = [
   {
     "kind": "Variable",
     "name": "name",
@@ -139,153 +134,166 @@ v4 = [
     "variableName": "owner"
   }
 ],
-v5 = [
-  {
-    "kind": "Variable",
-    "name": "number",
-    "variableName": "number"
-  }
-],
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "number",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v9 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "state",
-  "storageKey": null
-},
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "url",
-  "storageKey": null
-},
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v12 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "merged",
-  "storageKey": null
-},
-v13 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "mergedAt",
-  "storageKey": null
-},
-v14 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "closed",
-  "storageKey": null
-},
-v15 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "additions",
-  "storageKey": null
-},
-v16 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "deletions",
-  "storageKey": null
-},
-v17 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "changedFiles",
-  "storageKey": null
-},
-v18 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "totalCommentsCount",
-  "storageKey": null
-},
-v19 = [
-  {
-    "kind": "Literal",
-    "name": "last",
-    "value": 1
-  }
-],
-v20 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v21 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "totalCount",
-  "storageKey": null
-},
-v22 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "oid",
-  "storageKey": null
-},
-v23 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "context",
-  "storageKey": null
-},
-v24 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "description",
   "storageKey": null
 },
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "openGraphImageUrl",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "avatarUrl",
+  "storageKey": null
+},
+v7 = [
+  {
+    "kind": "Variable",
+    "name": "number",
+    "variableName": "number"
+  }
+],
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "number",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "state",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v14 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "merged",
+  "storageKey": null
+},
+v15 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "mergedAt",
+  "storageKey": null
+},
+v16 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "closed",
+  "storageKey": null
+},
+v17 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "additions",
+  "storageKey": null
+},
+v18 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "deletions",
+  "storageKey": null
+},
+v19 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "changedFiles",
+  "storageKey": null
+},
+v20 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCommentsCount",
+  "storageKey": null
+},
+v21 = [
+  {
+    "kind": "Literal",
+    "name": "last",
+    "value": 1
+  }
+],
+v22 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v23 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCount",
+  "storageKey": null
+},
+v24 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "oid",
+  "storageKey": null
+},
 v25 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 100
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "context",
+  "storageKey": null
 },
 v26 = [
-  (v25/*: any*/)
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 100
+  }
 ],
 v27 = {
   "alias": null,
@@ -347,7 +355,7 @@ v35 = {
   "storageKey": null
 },
 v36 = [
-  (v6/*: any*/),
+  (v8/*: any*/),
   (v27/*: any*/),
   {
     "alias": null,
@@ -382,15 +390,7 @@ v38 = {
   "abstractKey": null
 },
 v39 = [
-  {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
-  },
-  (v25/*: any*/)
-],
-v40 = [
-  (v6/*: any*/),
+  (v8/*: any*/),
   (v27/*: any*/),
   {
     "alias": null,
@@ -400,9 +400,9 @@ v40 = [
     "name": "owner",
     "plural": false,
     "selections": [
-      (v20/*: any*/),
+      (v22/*: any*/),
       (v35/*: any*/),
-      (v6/*: any*/)
+      (v8/*: any*/)
     ],
     "storageKey": null
   }
@@ -412,8 +412,7 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/),
-      (v3/*: any*/)
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -421,22 +420,34 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v4/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Repository",
         "kind": "LinkedField",
         "name": "repository",
         "plural": false,
         "selections": [
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": null,
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "owner",
+            "plural": false,
+            "selections": [
+              (v6/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v7/*: any*/),
             "concreteType": "PullRequest",
             "kind": "LinkedField",
             "name": "pullRequest",
             "plural": false,
             "selections": [
-              (v6/*: any*/),
-              (v7/*: any*/),
               (v8/*: any*/),
               (v9/*: any*/),
               (v10/*: any*/),
@@ -448,16 +459,18 @@ return {
               (v16/*: any*/),
               (v17/*: any*/),
               (v18/*: any*/),
+              (v19/*: any*/),
+              (v20/*: any*/),
               {
                 "alias": null,
-                "args": (v19/*: any*/),
+                "args": (v21/*: any*/),
                 "concreteType": "PullRequestCommitConnection",
                 "kind": "LinkedField",
                 "name": "commits",
                 "plural": false,
                 "selections": [
-                  (v20/*: any*/),
-                  (v21/*: any*/),
+                  (v22/*: any*/),
+                  (v23/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -474,7 +487,7 @@ return {
                         "name": "commit",
                         "plural": false,
                         "selections": [
-                          (v22/*: any*/),
+                          (v24/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -483,7 +496,7 @@ return {
                             "name": "status",
                             "plural": false,
                             "selections": [
-                              (v9/*: any*/),
+                              (v11/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -492,9 +505,9 @@ return {
                                 "name": "contexts",
                                 "plural": true,
                                 "selections": [
-                                  (v23/*: any*/),
-                                  (v9/*: any*/),
-                                  (v24/*: any*/)
+                                  (v25/*: any*/),
+                                  (v11/*: any*/),
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -509,7 +522,7 @@ return {
                             "name": "checkSuites",
                             "plural": false,
                             "selections": [
-                              (v21/*: any*/),
+                              (v23/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -538,7 +551,7 @@ return {
                                     "name": "checkRuns",
                                     "plural": false,
                                     "selections": [
-                                      (v21/*: any*/),
+                                      (v23/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -604,25 +617,9 @@ return {
                 "plural": false,
                 "selections": [
                   (v35/*: any*/),
-                  (v10/*: any*/),
+                  (v12/*: any*/),
                   (v37/*: any*/),
                   (v38/*: any*/)
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": (v39/*: any*/),
-                "concreteType": "PullRequestChangedFileConnection",
-                "kind": "LinkedField",
-                "name": "files",
-                "plural": false,
-                "selections": [
-                  {
-                    "args": null,
-                    "kind": "FragmentSpread",
-                    "name": "PRFilesFragment"
-                  }
                 ],
                 "storageKey": null
               }
@@ -639,32 +636,45 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v3/*: any*/),
-      (v1/*: any*/),
       (v2/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v1/*: any*/)
     ],
     "kind": "Operation",
     "name": "PullRequestQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v4/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Repository",
         "kind": "LinkedField",
         "name": "repository",
         "plural": false,
         "selections": [
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": null,
+            "concreteType": null,
+            "kind": "LinkedField",
+            "name": "owner",
+            "plural": false,
+            "selections": [
+              (v22/*: any*/),
+              (v6/*: any*/),
+              (v8/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v7/*: any*/),
             "concreteType": "PullRequest",
             "kind": "LinkedField",
             "name": "pullRequest",
             "plural": false,
             "selections": [
-              (v6/*: any*/),
-              (v7/*: any*/),
               (v8/*: any*/),
               (v9/*: any*/),
               (v10/*: any*/),
@@ -676,16 +686,18 @@ return {
               (v16/*: any*/),
               (v17/*: any*/),
               (v18/*: any*/),
+              (v19/*: any*/),
+              (v20/*: any*/),
               {
                 "alias": null,
-                "args": (v19/*: any*/),
+                "args": (v21/*: any*/),
                 "concreteType": "PullRequestCommitConnection",
                 "kind": "LinkedField",
                 "name": "commits",
                 "plural": false,
                 "selections": [
-                  (v20/*: any*/),
-                  (v21/*: any*/),
+                  (v22/*: any*/),
+                  (v23/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -702,7 +714,7 @@ return {
                         "name": "commit",
                         "plural": false,
                         "selections": [
-                          (v22/*: any*/),
+                          (v24/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -711,7 +723,7 @@ return {
                             "name": "status",
                             "plural": false,
                             "selections": [
-                              (v9/*: any*/),
+                              (v11/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -720,14 +732,14 @@ return {
                                 "name": "contexts",
                                 "plural": true,
                                 "selections": [
-                                  (v23/*: any*/),
-                                  (v9/*: any*/),
-                                  (v24/*: any*/),
-                                  (v6/*: any*/)
+                                  (v25/*: any*/),
+                                  (v11/*: any*/),
+                                  (v4/*: any*/),
+                                  (v8/*: any*/)
                                 ],
                                 "storageKey": null
                               },
-                              (v6/*: any*/)
+                              (v8/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -739,7 +751,7 @@ return {
                             "name": "checkSuites",
                             "plural": false,
                             "selections": [
-                              (v21/*: any*/),
+                              (v23/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -757,7 +769,7 @@ return {
                                     "plural": false,
                                     "selections": [
                                       (v27/*: any*/),
-                                      (v6/*: any*/)
+                                      (v8/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -771,7 +783,7 @@ return {
                                     "name": "checkRuns",
                                     "plural": false,
                                     "selections": [
-                                      (v21/*: any*/),
+                                      (v23/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -783,25 +795,25 @@ return {
                                           (v27/*: any*/),
                                           (v30/*: any*/),
                                           (v29/*: any*/),
-                                          (v6/*: any*/)
+                                          (v8/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
                                     ],
                                     "storageKey": "checkRuns(first:100)"
                                   },
-                                  (v6/*: any*/)
+                                  (v8/*: any*/)
                                 ],
                                 "storageKey": null
                               }
                             ],
                             "storageKey": "checkSuites(first:100)"
                           },
-                          (v6/*: any*/)
+                          (v8/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -819,7 +831,7 @@ return {
                 "kind": "LinkedField",
                 "name": "baseRepository",
                 "plural": false,
-                "selections": (v40/*: any*/),
+                "selections": (v39/*: any*/),
                 "storageKey": null
               },
               {
@@ -829,7 +841,7 @@ return {
                 "kind": "LinkedField",
                 "name": "headRepository",
                 "plural": false,
-                "selections": (v40/*: any*/),
+                "selections": (v39/*: any*/),
                 "storageKey": null
               },
               {
@@ -840,89 +852,18 @@ return {
                 "name": "author",
                 "plural": false,
                 "selections": [
-                  (v20/*: any*/),
+                  (v22/*: any*/),
                   (v35/*: any*/),
-                  (v10/*: any*/),
+                  (v12/*: any*/),
                   (v37/*: any*/),
                   (v38/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v6/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": (v39/*: any*/),
-                "concreteType": "PullRequestChangedFileConnection",
-                "kind": "LinkedField",
-                "name": "files",
-                "plural": false,
-                "selections": [
-                  (v21/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageInfo",
-                    "kind": "LinkedField",
-                    "name": "pageInfo",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "hasNextPage",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "endCursor",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PullRequestChangedFile",
-                    "kind": "LinkedField",
-                    "name": "nodes",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "path",
-                        "storageKey": null
-                      },
-                      (v15/*: any*/),
-                      (v16/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "changeType",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "viewerViewedState",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -930,23 +871,23 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v8/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "142cabc3da8efb9c8c16d6eba559fdd0",
+    "cacheID": "35a9bb6da334b2ab259a4c950e885fb2",
     "id": null,
     "metadata": {},
     "name": "PullRequestQuery",
     "operationKind": "query",
-    "text": "query PullRequestQuery($owner:String!,$name:String!,$number:Int!,$after:String){repository(owner:$owner,name:$name){pullRequest(number:$number){id,number,title,state,url,createdAt,merged,mergedAt,closed,additions,deletions,changedFiles,totalCommentsCount,commits(last:1){__typename,totalCount,nodes{commit{oid,status{state,contexts{context,state,description,id},id},checkSuites(first:100){totalCount,nodes{app{name,id},conclusion,status,checkRuns(first:100){totalCount,nodes{name,status,conclusion,id}},id}},id},id}},baseRefName,baseRefOid,headRefName,headRefOid,baseRepository{id,name,owner{__typename,login,id}},headRepository{id,name,owner{__typename,login,id}},author{__typename,login,url,avatarUrl(size:40),...on User{name},...on Node{__isNode:__typename,id}},files(first:100,after:$after){...PRFilesFragment}},id}}fragment PRFilesFragment on PullRequestChangedFileConnection{totalCount,pageInfo{hasNextPage,endCursor},nodes{path,additions,deletions,changeType,viewerViewedState}}"
+    "text": "query PullRequestQuery($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){description,openGraphImageUrl,owner{__typename,avatarUrl,id},pullRequest(number:$number){id,number,title,state,url,createdAt,merged,mergedAt,closed,additions,deletions,changedFiles,totalCommentsCount,commits(last:1){__typename,totalCount,nodes{commit{oid,status{state,contexts{context,state,description,id},id},checkSuites(first:100){totalCount,nodes{app{name,id},conclusion,status,checkRuns(first:100){totalCount,nodes{name,status,conclusion,id}},id}},id},id}},baseRefName,baseRefOid,headRefName,headRefOid,baseRepository{id,name,owner{__typename,login,id}},headRepository{id,name,owner{__typename,login,id}},author{__typename,login,url,avatarUrl(size:40),...on User{name},...on Node{__isNode:__typename,id}}},id}}"
   }
 };
 })();
 
-(node as any).hash = "a9ec4334372e845ca59b609c8f42c2f9";
+(node as any).hash = "e87eb00c504aab6e2e363ca43c516a30";
 
 export default node;

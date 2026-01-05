@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { cache } from 'react';
 import {
   type CacheConfig,
@@ -26,13 +28,12 @@ export const responseCache = new QueryResponseCache({
 
 /**
  * CreateNetwork
- *
  */
 export function createNetwork(): NetworkType {
   /**
-   *fetchResponse
+   * fetchResponse
    *
-   * @param params -fetch response parameters
+   * @param params - fetch response parameters
    * @param variables - variables to pass to the query
    * @param cacheConfig - cache configuration
    */
@@ -66,7 +67,6 @@ export function createNetwork(): NetworkType {
 
 /**
  * clientEnvironment
- *
  */
 export function clientEnvironment(): Environment | null {
   if (typeof window === 'undefined') return null;
@@ -86,9 +86,15 @@ export function clientEnvironment(): Environment | null {
 }
 
 /**
- * serverEnvironmentWithoutCache
+ * serverEnvironment
+ *
+ * Request-scoped Relay environment (React cache is request-scoped in RSC).
  */
-export const serverEnvironmentWithoutCache = (): Environment => {
+export const getServerEnvironment = cache((): Environment => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[relay] Creating new server environment');
+  }
+
   const network = createNetwork();
 
   const relayServerEnvironment = new Environment({
@@ -101,7 +107,6 @@ export const serverEnvironmentWithoutCache = (): Environment => {
   relayServerEnvironment.getNetwork().responseCache = network.responseCache;
 
   return relayServerEnvironment;
-};
+});
 
 export const environment = clientEnvironment();
-export const serverEnvironment = cache(serverEnvironmentWithoutCache);

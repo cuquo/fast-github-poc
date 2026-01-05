@@ -1,25 +1,21 @@
 /** biome-ignore-all lint/performance/noImgElement: use cached assets */
 import 'server-only';
 
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Fragment, use } from 'react';
 
 import ButtonTop from '@/components/button';
+import Link from '@/components/link';
 import ListFiles from '@/components/list-files';
 import TreeFragment, {
   type TreeFragment$key,
 } from '@/graphql/fragments/__generated__/TreeFragment.graphql';
 import TreeQueryNode, {
-  type TreeQuery,
   type TreeQuery$data,
 } from '@/graphql/queries/__generated__/TreeQuery.graphql';
-import {
-  getQueryFromRelayStore,
-  loadSerializableQuery,
-} from '@/graphql/relay/load-serializable-query';
-
-import getServerFragment from '../graphql/relay/get-server-fragment';
+import { treeQueryCache } from '@/graphql/queries/TreeQueryCache';
+import getServerFragment from '@/graphql/relay/get-server-fragment';
+import { getQueryFromRelayStore } from '@/graphql/relay/load-serializable-query';
 
 export default function Tree({
   branch,
@@ -34,15 +30,7 @@ export default function Tree({
 }) {
   const path = decodeURIComponent(data.slice(0).join('/'));
 
-  use(
-    loadSerializableQuery<typeof TreeQueryNode, TreeQuery>(TreeQueryNode, {
-      expr: `${branch}:${path}`,
-      name,
-      owner,
-      path,
-      withMeta: true,
-    }),
-  );
+  use(treeQueryCache(owner, name, `${branch}:${path}`, path));
 
   const { repository } = getQueryFromRelayStore<TreeQuery$data>(TreeQueryNode, {
     expr: `${branch}:${path}`,
@@ -171,7 +159,7 @@ export default function Tree({
                           /^(https?:\/\/)?(www\.)?github\.com\//,
                           '/',
                         )}
-                        prefetch
+                        prefetch={false}
                       >
                         #{lastPr?.number}
                       </Link>
@@ -197,8 +185,8 @@ export default function Tree({
               <div className="flex h-11.5 w-full rounded-t-(--borderRadius-medium) border border-border-default bg-bg-default"></div>
             </div>
           </div>
-          <div className="-mt-[45px] sticky top-0 z-9 flex w-full">
-            <div className="flex h-[45px] w-full items-center justify-between border border-border-default border-t-0 bg-bg-muted pr-2 pl-4">
+          <div className="sticky top-0 z-9 -mt-11.25 flex w-full">
+            <div className="flex h-11.25 w-full items-center justify-between border border-border-default border-t-0 bg-bg-muted pr-2 pl-4">
               <div className="flex items-center">
                 <Link
                   className="font-semibold text-fg-default"

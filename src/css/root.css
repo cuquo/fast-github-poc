@@ -155,6 +155,10 @@ fieldset {
   padding: 0.35em 0.625em 0.75em;
 }
 
+::selection {
+  background-color: #1f6febb3;
+}
+
 legend {
   box-sizing: border-box;
   color: inherit;
@@ -483,12 +487,12 @@ pre {
 }
 
 .show-more-commit-state:checked ~ .Table-module .show-more-commit-button {
-  background-color: #656c7640;
+  background-color: #22282f;
 }
 
 @media (min-width: 63.25rem) {
   .show-sidebar-state:checked ~ .info-sticky .show-sidebar-button {
-    background-color: #656c7640;
+    background-color: #22282f;
   }
   .show-sidebar-state:checked
     ~ .info-sticky
@@ -537,4 +541,19 @@ pre {
 /* Firefox */
 .hide-chrome-scrollbar {
   scrollbar-width: none !important;
+}
+
+.diff-table .diff-code-left,
+.diff-table .diff-code-right {
+  user-select: text;
+}
+
+/* When the right side has focus somewhere inside, disable selection on the left side */
+.diff-table:has(.diff-code-right:focus-within) .diff-code-left {
+  user-select: none;
+}
+
+/* When the left side has focus somewhere inside, disable selection on the right side */
+.diff-table:has(.diff-code-left:focus-within) .diff-code-right {
+  user-select: none;
 }

@@ -1,3 +1,4 @@
+import 'server-only';
 /**
  * Count lines in a text efficiently.
  * - O(n) time, O(1) extra memory

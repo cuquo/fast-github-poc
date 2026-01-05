@@ -13,7 +13,7 @@ import type { ConcreteRequest } from 'relay-runtime/lib/util/RelayConcreteNode';
 
 import * as ServerStore from '@/utils/server-store';
 
-import { serverEnvironment } from './environment';
+import { getServerEnvironment } from './environment';
 import { networkFetch } from './network-fetch';
 
 export interface SerializablePreloadedQuery<
@@ -49,7 +49,7 @@ export async function loadSerializableQuery<
   options?: LoadSerializableQueryOptions,
 ): Promise<SerializablePreloadedQuery<TRequest, TQuery>> {
   const { addToClient = false, maskedData = false } = options || {};
-  const environment = serverEnvironment();
+  const environment = getServerEnvironment();
   const request = getRequest(query);
   const response = (await networkFetch(
     request.params,
@@ -95,7 +95,7 @@ export function getQueryFromRelayStore<TQuery>(
   query: GraphQLTaggedNode,
   variables: OperationType['variables'],
 ): TQuery {
-  const environment = serverEnvironment();
+  const environment = getServerEnvironment();
   const request = getRequest(query);
   const operationDescriptor = createOperationDescriptor(request, variables);
 
@@ -114,7 +114,7 @@ export function addQueryToRelayStore(
   variables: OperationType['variables'],
   data: PayloadData,
 ): void {
-  const environment = serverEnvironment();
+  const environment = getServerEnvironment();
   const request = getRequest(query);
   const operationDescriptor = createOperationDescriptor(request, variables);
 

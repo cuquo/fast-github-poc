@@ -18,6 +18,7 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "biome.enabled": true,
+  "css.lint.unknownProperties": "ignore",
   "editor.codeActionsOnSave": {
     "source.action.useSortedAttributes.biome": "explicit",
     "source.action.useSortedKeys.biome": "explicit",

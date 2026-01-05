@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useSelectedLayoutSegments } from 'next/navigation';
+
+import Link from './link';
 
 export default function HeaderSegment({
   children,
@@ -16,7 +17,7 @@ export default function HeaderSegment({
     <>
       <span
         // href={`/${owner}`}
-        className="hover:no-underline! ffont-semibold ml-2 flex h-7 select-none items-center rounded-(--borderRadius-medium) px-1.5 py-1 text-fg-default! hover:bg-[#656c7633]!"
+        className="hover:no-underline! ffont-semibold ml-2 flex h-7 select-none items-center rounded-(--borderRadius-medium) px-1.5 py-1 text-fg-default! hover:bg-[#2D3239]!"
         // prefetch
       >
         {owner}
@@ -25,7 +26,7 @@ export default function HeaderSegment({
         <>
           {children}
           <Link
-            className="hover:no-underline! flex h-7 items-center rounded-(--borderRadius-medium) px-1.5 py-1 font-semibold text-fg-default! hover:bg-[#656c7633]!"
+            className="hover:no-underline! flex h-7 items-center rounded-(--borderRadius-medium) px-1.5 py-1 font-semibold text-fg-default! hover:bg-[#2D3239]!"
             href={`/${owner}/${name}`}
             prefetch
           >
