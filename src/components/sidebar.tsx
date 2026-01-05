@@ -1,5 +1,6 @@
 import 'server-only';
 
+import Link from 'next/link';
 import { use } from 'react';
 
 import { SIZE_TO_PREFETCH } from '@/constants/options';
@@ -18,8 +19,6 @@ import {
 import DirectoryIcon from '@/icons/directory-icon';
 import FileIcon from '@/icons/file-icon';
 import SymlinkIcon from '@/icons/symlink-icon';
-
-import Link from './link';
 
 export default function Sidebar({
   params,

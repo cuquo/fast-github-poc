@@ -1,11 +1,10 @@
 /** biome-ignore-all lint/performance/noImgElement: use cached assets */
 import 'server-only';
 
+import Link from 'next/link';
 import { Fragment } from 'react';
 
 import DirectoryIcon from '@/icons/directory-icon';
-
-import Link from './link';
 
 export default function TreeSkeleton({
   branch,

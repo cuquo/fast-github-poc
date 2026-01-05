@@ -1,8 +1,8 @@
 /** biome-ignore-all lint/performance/noImgElement: caching */
 
 import { cacheLife } from 'next/cache';
+import Link from 'next/link';
 
-import Link from '@/components/link';
 import Markdown from '@/components/markdown';
 
 import { gist, title } from './_gist';

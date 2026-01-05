@@ -20,9 +20,9 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     inlineCss: true,
-    // staleTimes: {
-    //   dynamic: 60,
-    // },
+    staleTimes: {
+      dynamic: 60,
+    },
   },
   logging: {
     fetches: {
@@ -31,9 +31,6 @@ const nextConfig: NextConfig = {
     },
   },
   reactCompiler: true,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 };
 
 export default withRS(nextConfig);

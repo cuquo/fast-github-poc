@@ -1,8 +1,7 @@
 'use client';
 
+import Link from 'next/link';
 import { useSelectedLayoutSegments } from 'next/navigation';
-
-import Link from './link';
 
 export default function HeaderSegment({
   children,

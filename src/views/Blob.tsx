@@ -1,12 +1,12 @@
 /** biome-ignore-all lint/performance/noImgElement: use already optimized image from github */
 import 'server-only';
 
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Fragment, Suspense, use } from 'react';
 
 import BlobHighlight from '@/components/blob-highlight';
 import ButtonTop from '@/components/button';
-import Link from '@/components/link';
 import Markdown from '@/components/markdown';
 import BlobByPathQueryNode, {
   type BlobByPathQuery$data,

@@ -1,11 +1,11 @@
 /** biome-ignore-all lint/performance/noImgElement: use cached assets */
 import 'server-only';
 
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Fragment, use } from 'react';
 
 import ButtonTop from '@/components/button';
-import Link from '@/components/link';
 import ListFiles from '@/components/list-files';
 import TreeFragment, {
   type TreeFragment$key,

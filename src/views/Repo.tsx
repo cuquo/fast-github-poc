@@ -2,10 +2,10 @@
 import 'server-only';
 
 import { clsx } from 'clsx/lite';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense, use } from 'react';
 
-import Link from '@/components/link';
 import ListFiles from '@/components/list-files';
 import Readme from '@/components/read-me';
 import TextSkeleton from '@/components/text-skeleton';

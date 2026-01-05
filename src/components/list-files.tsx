@@ -2,6 +2,7 @@
 import 'server-only';
 
 import { clsx } from 'clsx/lite';
+import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { SIZE_TO_PREFETCH } from '@/constants/options';
@@ -13,7 +14,6 @@ import HistoryIcon from '@/icons/history-icon';
 import SymlinkIcon from '@/icons/symlink-icon';
 import { extractCommitMessageAndPr } from '@/utils/extract-commit-message-pr';
 
-import Link from './link';
 import ListFilesWithCommits from './list-files-with-commits';
 
 type lastCommitInfo = {

@@ -2,6 +2,7 @@ import 'server-only';
 
 import { clsx } from 'clsx/lite';
 import { cacheLife } from 'next/cache';
+import Link from 'next/link';
 import { cacheSignal } from 'react';
 
 import { DIFFS_PER_PAGE, SIZE_TO_PREFETCH } from '@/constants/options';
@@ -11,8 +12,6 @@ import DirectoryIcon from '@/icons/directory-icon';
 import FileIcon from '@/icons/file-icon';
 import SymlinkIcon from '@/icons/symlink-icon';
 import { github } from '@/utils/github-octokit';
-
-import Link from './link';
 
 type ListCommitsItem = Awaited<
   ReturnType<typeof github.rest.repos.listCommits>
