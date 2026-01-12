@@ -36,6 +36,7 @@
       "!.next",
       "!next-env.d.ts",
       "!public/assets",
+      "!bun.lock",
       "!**/__generated__"
     ]
   },
