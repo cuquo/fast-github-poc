@@ -126,7 +126,7 @@ function PrDiffPage({
   if (ordered.length === 0) return null;
 
   const chunkingOpts: ChunkingOptions = {
-    maxEffectiveLinesPerChunk: 1200,
+    maxEffectiveLinesPerChunk: 6000,
     targetEffectiveLinesPerChunk: TARGET_EFFECTIVE_LINES_PER_CHUNK,
     targetFilesPerChunk: CHUNK_SIZE,
   };
