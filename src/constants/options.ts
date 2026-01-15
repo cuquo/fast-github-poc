@@ -8,7 +8,7 @@ export const SIZE_TO_PREFETCH = 20 * 1024; // 20 KB
 export const DIFFS_PER_PAGE = 30;
 
 /* number of diffs to syntax highlight for initial paint */
-export const INITIAL_SYNTAX_HIGHLIGHT_DIFF = 10;
+export const INITIAL_SYNTAX_HIGHLIGHT_DIFF = 15;
 
 /* page size when fetching listing PR files */
 export const PAGE_SIZE = 100;
@@ -24,7 +24,7 @@ export const FILES_VIRTUALIZATION_THRESHOLD = 80;
 export const TOO_LARGE_DIFF_THRESHOLD = 500;
 
 /* Min DiffEntry we render per Suspense boundary after initial load. */
-export const CHUNK_SIZE = 60;
+export const CHUNK_SIZE = 36;
 
 /* delay (in ms) between chunks to throttle server streaming cadence
    and give the browser time to paint and process streamed HTML */
@@ -37,10 +37,10 @@ export const PLACEHOLDER_COST_LINES = 5;
 /* target effective render budget per streamed chunk, based on
    additions + deletions for real diffs and PLACEHOLDER_COST_LINES for large ones.
    This controls chunk size to smooth streaming bursts without over-throttling. */
-export const TARGET_EFFECTIVE_LINES_PER_CHUNK = 3000;
+export const TARGET_EFFECTIVE_LINES_PER_CHUNK = 1080;
 
 /* hard limit for effective lines per chunk before forcing a new chunk */
-export const MAX_EFFECTIVE_LINES_PER_CHUNK = 4000;
+export const MAX_EFFECTIVE_LINES_PER_CHUNK = 1440;
 
 /* List of allowed GitHub repositories for demonstration or testing purposes */
 export const ALLOWED_REPOS = ['vercel', 'facebook', 'oven-sh', 'oxc-project'];
