@@ -5,6 +5,7 @@ import { Fragment, Suspense, use } from 'react';
 import {
   CHUNK_DELAY_MS,
   CHUNK_SIZE,
+  MAX_EFFECTIVE_LINES_PER_CHUNK,
   MAX_FILES_TO_RENDER,
   PAGE_SIZE,
   PLACEHOLDER_COST_LINES,
@@ -126,7 +127,7 @@ function PrDiffPage({
   if (ordered.length === 0) return null;
 
   const chunkingOpts: ChunkingOptions = {
-    maxEffectiveLinesPerChunk: 6000,
+    maxEffectiveLinesPerChunk: MAX_EFFECTIVE_LINES_PER_CHUNK,
     targetEffectiveLinesPerChunk: TARGET_EFFECTIVE_LINES_PER_CHUNK,
     targetFilesPerChunk: CHUNK_SIZE,
   };
