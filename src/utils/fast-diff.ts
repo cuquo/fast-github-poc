@@ -180,10 +180,6 @@ function computeBoundedMyers(
       return { reason: 'time', success: false };
 
     for (let k = -d; k <= d; k += 2) {
-      trace[d * stride + (k + offset)] = v[k + offset];
-    }
-
-    for (let k = -d; k <= d; k += 2) {
       const kIdx = k + offset;
       const vLeft = kIdx - 1 >= 0 ? v[kIdx - 1] : -1;
       const vDown = kIdx + 1 < vSize ? v[kIdx + 1] : -1;
@@ -221,10 +217,19 @@ function computeBoundedMyers(
       v[kIdx] = x;
 
       if (x >= N && y >= M) {
+        // Store trace BEFORE returning (at end of iteration d)
+        for (let kk = -d; kk <= d; kk += 2) {
+          trace[d * stride + (kk + offset)] = v[kk + offset];
+        }
         const path = backtrack(trace, stride, offset, d, N, M, startA, startB);
         if (!path) return { reason: 'depth', success: false };
         return { pairs: path, success: true };
       }
+    }
+
+    // Store trace at END of iteration d (V values after forward pass)
+    for (let k = -d; k <= d; k += 2) {
+      trace[d * stride + (k + offset)] = v[k + offset];
     }
   }
 
@@ -248,7 +253,7 @@ function backtrack(
   for (let d = depth; d > 0; d--) {
     const k = x - y;
     const kIdx = k + offset;
-    const prevRow = (d - 1) * stride;
+    const prevRow = (d - 1) * stride; // trace[d-1] stores V at end of d-1
 
     let vLeft = -1;
     if (kIdx - 1 >= 0) vLeft = trace[prevRow + (kIdx - 1)];

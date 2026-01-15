@@ -23,6 +23,7 @@
     "@types/relay-runtime": "20.1.1",
     "babel-plugin-react-compiler": "1.0.0",
     "diff": "8.0.3",
+    "fast-check": "^4.5.3",
     "fast-diff": "1.3.0",
     "graphql": "16.12.0",
     "next-rspack": "16.1.1-canary.28",
@@ -42,6 +43,7 @@
     "lint": "bun oxlint --type-check --type-aware && bun biome check",
     "relay-compile": "bun relay-compiler",
     "start": "next start",
+    "test": "bun test",
     "update:github-schema": "bun src/scripts/update-graphql-schema.ts"
   },
   "version": "0.1.0"
