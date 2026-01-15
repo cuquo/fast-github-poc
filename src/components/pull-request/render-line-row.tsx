@@ -38,7 +38,12 @@ export function renderLineRow(
   index: number,
   row: SplitDiffRow,
   hasSyntaxHighlighting: boolean,
-  highlight?: { oldHtml: string | null; newHtml: string | null },
+  highlight?: {
+    oldHtml: string | null;
+    newHtml: string | null;
+    oldWordDiff?: string | null;
+    newWordDiff?: string | null;
+  },
 ) {
   const { oldLine, newLine, oldContent, newContent, kind } = row;
 
@@ -46,12 +51,23 @@ export function renderLineRow(
   const hasNoNewlineLeft = isNoEol && row.oldContent != null;
   const hasNoNewlineRight = isNoEol && row.newContent != null;
 
+  // For 'change' rows, prefer word-diff HTML if available
+  const useWordDiff = kind === 'change';
+  const oldHtmlToUse =
+    useWordDiff && highlight?.oldWordDiff
+      ? highlight.oldWordDiff
+      : highlight?.oldHtml;
+  const newHtmlToUse =
+    useWordDiff && highlight?.newWordDiff
+      ? highlight.newWordDiff
+      : highlight?.newHtml;
+
   const leftColumnContent = hasNoNewlineLeft ? (
     <span className="flex h-6 items-center">
       <NoEntryIcon className="fill-[#f85149]" />
     </span>
-  ) : highlight?.oldHtml ? (
-    renderHighlightedHtml(highlight.oldHtml) || '\u00A0'
+  ) : oldHtmlToUse ? (
+    renderHighlightedHtml(oldHtmlToUse) || '\u00A0'
   ) : (
     oldContent || '\u00A0'
   );
@@ -59,8 +75,8 @@ export function renderLineRow(
     <span className="flex h-6 items-center">
       <NoEntryIcon className="fill-[#f85149]" />
     </span>
-  ) : highlight?.newHtml ? (
-    renderHighlightedHtml(highlight.newHtml) || '\u00A0'
+  ) : newHtmlToUse ? (
+    renderHighlightedHtml(newHtmlToUse) || '\u00A0'
   ) : (
     newContent || '\u00A0'
   );

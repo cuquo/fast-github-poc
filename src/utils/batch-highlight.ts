@@ -9,8 +9,9 @@ import { guessLanguageFromFile } from './guess-language-from-file';
 import { getPatchToRenderableRows } from './patch-to-renderable-rows';
 import type { PullRequestFile } from './pr-diff-types';
 import { fetchListFiles } from './pr-files-waterfall';
-import { renderHTML } from './render-html';
+import { renderHTMLLines } from './render-html';
 import type { SplitRenderableRow } from './split-diff';
+import { computeWordDiff, segmentsToHtml } from './word-diff';
 
 export type HighlightedFileData =
   | {
@@ -21,6 +22,8 @@ export type HighlightedFileData =
       hasLargeRow: boolean;
       highlightedNew: string[];
       highlightedOld: string[];
+      wordDiffNew: (string | null)[];
+      wordDiffOld: (string | null)[];
       previous_filename: string | undefined;
       rows: SplitRenderableRow[];
     }
@@ -65,10 +68,39 @@ const processFileHighlightCached = cache(
       .filter((v) => v !== null)
       .join('\n');
 
-    const [oldHtml, newHtml] = await Promise.all([
-      renderHTML(oldBody, 'diff-old-context', lang),
-      renderHTML(newBody, 'diff-new-context', lang),
+    const [highlightedOld, highlightedNew] = await Promise.all([
+      renderHTMLLines(oldBody, lang),
+      renderHTMLLines(newBody, lang),
     ]);
+
+    // Compute word-diff HTML for 'change' rows
+    // Indexed same as highlightedOld/New (by content presence, not by row)
+    const wordDiffOld: (string | null)[] = [];
+    const wordDiffNew: (string | null)[] = [];
+
+    for (const r of lineRows) {
+      const isChange =
+        r.row.kind === 'change' &&
+        r.row.oldContent != null &&
+        r.row.newContent != null;
+
+      if (isChange && r.row.oldContent != null && r.row.newContent != null) {
+        const { oldSegments, newSegments } = computeWordDiff(
+          r.row.oldContent,
+          r.row.newContent,
+        );
+        wordDiffOld.push(segmentsToHtml(oldSegments));
+        wordDiffNew.push(segmentsToHtml(newSegments));
+      } else {
+        // Push null for each side that has content (to maintain index alignment)
+        if (r.row.oldContent != null) {
+          wordDiffOld.push(null);
+        }
+        if (r.row.newContent != null) {
+          wordDiffNew.push(null);
+        }
+      }
+    }
 
     return {
       additions,
@@ -76,10 +108,12 @@ const processFileHighlightCached = cache(
       deletions,
       filename,
       hasLargeRow,
-      highlightedNew: newHtml?.split('\n') || [],
-      highlightedOld: oldHtml?.split('\n') || [],
+      highlightedNew,
+      highlightedOld,
       previous_filename,
       rows,
+      wordDiffNew,
+      wordDiffOld,
     };
   },
 );

@@ -214,3 +214,13 @@
 	background: linear-gradient(to top, rgb(13, 17, 23), rgba(13, 17, 23, 0));
   bottom: 0;
 }
+
+.wd-del {
+  background-color: #7A302E;
+  border-radius: 0.125rem;
+}
+
+.wd-add {
+  background-color: #256132;
+  border-radius: 0.125rem;
+}

@@ -1,6 +1,11 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "ignorePatterns": ["**/__generated__/**", "**/node_modules/**"],
+  "ignorePatterns": [
+    "**/__generated__/**",
+    "**/node_modules/**",
+    ".opencode/**",
+    ".claude/**"
+  ],
   "plugins": ["react", "unicorn", "typescript", "oxc"],
   "rules": {
     "eslint/sort-keys": "error"

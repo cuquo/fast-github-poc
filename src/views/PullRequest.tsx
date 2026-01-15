@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { notFound } from 'next/navigation';
-import { Suspense, use } from 'react';
+import { Suspense } from 'react';
 
 import { PerformanceMarker } from '@/components/performance-marker';
 import DiffEntries from '@/components/pull-request/diff-entries';
@@ -23,16 +23,19 @@ import TriangleDownIcon from '@/icons/triangle-down-icon';
 import { numberFormatter } from '@/utils/number-formatter';
 import { getInitialPatches } from '@/utils/pr-files-waterfall';
 
-export default function PullRequest({
+export default async function PullRequest({
   data,
 }: {
   data: Promise<{ prId: number; owner: string; name: string }>;
 }) {
-  const { prId, owner, name } = use(data);
+  const { prId, owner, name } = await data;
 
   if (!ALLOWED_REPOS.includes(owner)) notFound();
 
-  use(pullRequestQueryCache(owner, name, prId));
+  const cachePromise = pullRequestQueryCache(owner, name, prId);
+  const patchesPromise = getInitialPatches(owner, name, prId);
+
+  await cachePromise;
 
   const { repository } = getQueryFromRelayStore<PullRequestQuery$data>(
     PullRequestQueryNode,
@@ -45,7 +48,7 @@ export default function PullRequest({
 
   if (!repository || !repository.pullRequest) notFound();
 
-  const initial = use(getInitialPatches(owner, name, prId));
+  const initial = await patchesPromise;
 
   if (!initial) notFound();
 

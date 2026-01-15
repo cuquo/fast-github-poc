@@ -30,6 +30,7 @@
   "editor.formatOnSaveMode": "file",
   "eslint.format.enable": false,
   "oxc.enable": true,
+  "oxc.path.oxlint": "./node_modules/.bin/oxlint",
   "oxc.typeAware": true,
   "prettier.enable": false,
   "prettier.requireConfig": true,

@@ -43,6 +43,8 @@ export default function DiffEntrySyntax({
     rows,
     highlightedNew,
     highlightedOld,
+    wordDiffNew,
+    wordDiffOld,
   } = data;
 
   let oldIndex = 0;
@@ -86,19 +88,25 @@ export default function DiffEntrySyntax({
             const row = item.row;
             let oldHtml: string | null = null;
             let newHtml: string | null = null;
+            let oldWordDiff: string | null = null;
+            let newWordDiff: string | null = null;
 
-            if (row.oldContent != null && highlightedOld) {
-              oldHtml = highlightedOld[oldIndex] ?? null;
+            if (row.oldContent != null) {
+              oldHtml = highlightedOld?.[oldIndex] ?? null;
+              oldWordDiff = wordDiffOld?.[oldIndex] ?? null;
               oldIndex += 1;
             }
-            if (row.newContent != null && highlightedNew) {
-              newHtml = highlightedNew[newIndex] ?? null;
+            if (row.newContent != null) {
+              newHtml = highlightedNew?.[newIndex] ?? null;
+              newWordDiff = wordDiffNew?.[newIndex] ?? null;
               newIndex += 1;
             }
 
             return renderLineRow(id, index, row, true, {
               newHtml,
+              newWordDiff,
               oldHtml,
+              oldWordDiff,
             });
           })}
         </tbody>

@@ -8,7 +8,7 @@ export const SIZE_TO_PREFETCH = 20 * 1024; // 20 KB
 export const DIFFS_PER_PAGE = 20;
 
 /* number of diffs to syntax highlight for initial paint */
-export const INITIAL_SYNTAX_HIGHLIGHT_DIFF = 5;
+export const INITIAL_SYNTAX_HIGHLIGHT_DIFF = 10;
 
 /* page size when fetching listing PR files */
 export const PAGE_SIZE = 100;
