@@ -24,7 +24,7 @@ export const FILES_VIRTUALIZATION_THRESHOLD = 80;
 export const TOO_LARGE_DIFF_THRESHOLD = 500;
 
 /* Min DiffEntry we render per Suspense boundary after initial load. */
-export const CHUNK_SIZE = 30;
+export const CHUNK_SIZE = 60;
 
 /* delay (in ms) between chunks to throttle server streaming cadence
    and give the browser time to paint and process streamed HTML */
