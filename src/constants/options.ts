@@ -5,7 +5,7 @@ export const NUMBER_OF_VISIBLE_LINES = 70;
 export const SIZE_TO_PREFETCH = 20 * 1024; // 20 KB
 
 /* number of diffs to load at first */
-export const DIFFS_PER_PAGE = 20;
+export const DIFFS_PER_PAGE = 30;
 
 /* number of diffs to syntax highlight for initial paint */
 export const INITIAL_SYNTAX_HIGHLIGHT_DIFF = 10;
@@ -37,10 +37,10 @@ export const PLACEHOLDER_COST_LINES = 5;
 /* target effective render budget per streamed chunk, based on
    additions + deletions for real diffs and PLACEHOLDER_COST_LINES for large ones.
    This controls chunk size to smooth streaming bursts without over-throttling. */
-export const TARGET_EFFECTIVE_LINES_PER_CHUNK = 2000;
+export const TARGET_EFFECTIVE_LINES_PER_CHUNK = 3000;
 
 /* hard limit for effective lines per chunk before forcing a new chunk */
-export const MAX_EFFECTIVE_LINES_PER_CHUNK = 2700;
+export const MAX_EFFECTIVE_LINES_PER_CHUNK = 4000;
 
 /* List of allowed GitHub repositories for demonstration or testing purposes */
 export const ALLOWED_REPOS = ['vercel', 'facebook', 'oven-sh', 'oxc-project'];
