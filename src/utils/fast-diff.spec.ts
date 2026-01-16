@@ -1,5 +1,7 @@
-import { describe, it, expect } from 'bun:test';
+import { describe, expect, it } from 'bun:test';
+
 import * as fc from 'fast-check';
+
 import { diffIds, fastDiff, type LCSPair, SPLIT_RE } from './fast-diff';
 
 function assertInvariants(
